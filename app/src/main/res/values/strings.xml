@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChemiQ</string>
+    <string name="tab_home">Αρχική</string>
+    <string name="tab_review">Επανάληψη</string>
+    <string name="tab_progress">Πρόοδος</string>
+    <string name="tab_settings">Ρυθμίσεις</string>
+</resources>
