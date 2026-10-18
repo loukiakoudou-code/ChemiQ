@@ -24,8 +24,7 @@ fun QuestionPanel(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             state.questionTab.forEach { tab ->
