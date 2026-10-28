@@ -38,7 +38,7 @@ class QuestionScreenProvider @Inject constructor() {
         )
 
         val topBarNavigationState = TopBarNavigationState(
-            navigationIcon = NavigationIcon.BACK,
+            navigationIcon = NavigationIcon.CLOSE,
             title = "Ερώτηση",
             chipText = "1/10",
             chipColor = ChipColor.PURPLE

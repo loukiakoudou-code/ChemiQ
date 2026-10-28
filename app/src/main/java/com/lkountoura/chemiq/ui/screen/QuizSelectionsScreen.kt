@@ -16,8 +16,10 @@ import com.lkountoura.chemiq.ui.component.common.TopBarNavigation
 import com.lkountoura.chemiq.ui.component.common.TopBarNavigationEvents
 import com.lkountoura.chemiq.ui.component.unitSelectionPage.DifficultyPanel
 import com.lkountoura.chemiq.ui.component.unitSelectionPage.DifficultyPanelEvents
+import com.lkountoura.chemiq.ui.component.unitSelectionPage.QuizSelectionSkeleton
 import com.lkountoura.chemiq.ui.component.unitSelectionPage.UnitPanel
 import com.lkountoura.chemiq.ui.component.unitSelectionPage.UnitPanelEvents
+import com.lkountoura.chemiq.ui.state.QuizUnitSelectionScreenState
 import com.lkountoura.chemiq.viewmodel.QuizSelectionScreenViewModel
 
 @Composable
@@ -47,41 +49,51 @@ fun QuizSelectionScreen(
 
             )
 
-            UnitPanel(
-                state = uiState.unitPanelState,
-                events = UnitPanelEvents(
-                    onPressed = {
-//                    viewModel.onUnitTabPressed(it)
-                    }
-                )
-            )
+            when (uiState) {
+                is QuizUnitSelectionScreenState.Loading -> {
+                    QuizSelectionSkeleton()
+                }
 
-            DifficultyPanel(
-                state = uiState.difficultyPanelState,
-                events = DifficultyPanelEvents(
-                    onPressed = { tag ->
-                        viewModel.onDifficultyBoxPressed(tag)
-                    }
-                ),
-                modifier = Modifier.padding(all = 16.dp)
-            )
+                is QuizUnitSelectionScreenState.Data -> {
+                    UnitPanel(
+                        state = uiState.unitPanelState,
+                        events = UnitPanelEvents(
+                            onPressed = { tag ->
+                                viewModel.onUnitTabPressed(tag)
+                            }
+                        )
+                    )
+
+                    DifficultyPanel(
+                        state = uiState.difficultyPanelState,
+                        events = DifficultyPanelEvents(
+                            onPressed = { tag ->
+                                viewModel.onDifficultyBoxPressed(tag)
+                            }
+                        ),
+                        modifier = Modifier.padding(all = 16.dp)
+                    )
+                }
+            }
         }
 
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            ChemiQButton(
-                state = uiState.buttonState,
-                events = ButtonActionsEvents(
-                    onMainButtonPressed = {
-                        if (selectedUnit != null && selectedDifficulty != null) {
-                            onStart?.invoke(selectedUnit.index, selectedDifficulty.tag)
+        if (uiState is QuizUnitSelectionScreenState.Data) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                ChemiQButton(
+                    state = uiState.buttonState,
+                    events = ButtonActionsEvents(
+                        onMainButtonPressed = {
+                            if (selectedUnit != null && selectedDifficulty != null) {
+                                onStart?.invoke(selectedUnit.index, selectedDifficulty.tag)
+                            }
                         }
-                    }
-                ),
-                modifier = Modifier.padding(all = 16.dp)
+                    ),
+                    modifier = Modifier.padding(all = 16.dp)
 
-            )
+                )
+            }
         }
     }
 }

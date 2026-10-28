@@ -14,6 +14,18 @@ sealed class QuizUnitSelectionScreenState(
     open val buttonState: ButtonState
 
 ) {
+    data class Loading(
+        override val unitPanelState: UnitPanelState,
+        override val topBarNavigationState: TopBarNavigationState,
+        override val difficultyPanelState: DifficultyPanelState,
+        override val buttonState: ButtonState
+    ) : QuizUnitSelectionScreenState(
+        unitPanelState = unitPanelState,
+        topBarNavigationState = topBarNavigationState,
+        difficultyPanelState = difficultyPanelState,
+        buttonState = buttonState
+    )
+
     data class Data(
         override val unitPanelState: UnitPanelState,
         override val topBarNavigationState: TopBarNavigationState,

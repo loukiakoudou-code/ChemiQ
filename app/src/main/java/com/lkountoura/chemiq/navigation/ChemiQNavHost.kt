@@ -8,10 +8,12 @@ import androidx.navigation.compose.composable
 import com.lkountoura.chemiq.navigation.routes.Home
 import com.lkountoura.chemiq.navigation.routes.PeriodicTable
 import com.lkountoura.chemiq.navigation.routes.Question
+import com.lkountoura.chemiq.navigation.routes.TimeAttack
 import com.lkountoura.chemiq.navigation.routes.TopicSelect
 import com.lkountoura.chemiq.ui.screen.Home.HomeScreen
 import com.lkountoura.chemiq.ui.screen.QuestionScreen
 import com.lkountoura.chemiq.ui.screen.QuizSelectionScreen
+import com.lkountoura.chemiq.ui.screen.TimeAttackScreen
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
 
 
@@ -34,6 +36,9 @@ fun ChemiQNavHost(
 
                         HomeNavigation.ToPeriodicTable ->
                             navController.navigate(PeriodicTable)
+
+                        HomeNavigation.TimeAttack ->
+                            navController.navigate(TimeAttack)
                     }
                 }
             )
@@ -50,6 +55,10 @@ fun ChemiQNavHost(
         }
         composable<Question> {
             QuestionScreen()
+        }
+
+        composable<TimeAttack> {
+            TimeAttackScreen()
         }
 
     }

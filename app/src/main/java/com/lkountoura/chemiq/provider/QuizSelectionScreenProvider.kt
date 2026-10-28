@@ -1,5 +1,6 @@
 package com.lkountoura.chemiq.provider
 
+import com.lkountoura.chemiq.data.dto.QuizSelectionUnitDTO
 import com.lkountoura.chemiq.ui.component.common.ButtonLayout
 import com.lkountoura.chemiq.ui.component.common.ButtonState
 import com.lkountoura.chemiq.ui.component.common.ChipColor
@@ -14,37 +15,30 @@ import com.lkountoura.chemiq.ui.state.QuizUnitSelectionScreenState
 import javax.inject.Inject
 
 class QuizSelectionScreenProvider @Inject constructor() {
-    fun provideData(): QuizUnitSelectionScreenState.Data {
-        val unit1 = UnitTabState(tag = "quiz1").setUnitTabState(
-            index = 1,
-            title = "Δομή ατόμου & Περιοδικός Πίνακας",
-            progress = 0.5f,
-            isSelected = true
+    fun provideLoading(): QuizUnitSelectionScreenState.Loading {
+        return QuizUnitSelectionScreenState.Loading(
+            topBarNavigationState = provideTopBarNavigationState(),
+            unitPanelState = UnitPanelState(),
+            difficultyPanelState = DifficultyPanelState(),
+            buttonState = provideButtonState()
         )
-        val unit2 = UnitTabState(tag = "quiz2").setUnitTabState(
-            index = 2,
-            title = "Χημικοί δεσμοί",
-            progress = 0.7f,
-            isSelected = false
-        )
-        val unit3 = UnitTabState(tag = "quiz3").setUnitTabState(
-            index = 3,
-            title = "Ονοματολογία ανόργανων",
-            progress = 0.9f,
-            isSelected = false
-        )
-        val unit4 = UnitTabState(tag = "quiz4").setUnitTabState(
-            index = 4,
-            title = "Χημικές αντιδράσεις",
-            progress = 0.6f,
-            isSelected = false
-        )
-        val unit5 = UnitTabState(tag = "quiz5").setUnitTabState(
-            index = 5,
-            title = "Mol & στοιχειομετρία",
-            progress = 0.2f,
-            isSelected = false
-        )
+    }
+
+    fun provideData(
+        newData: List<QuizSelectionUnitDTO>
+    ): QuizUnitSelectionScreenState.Data {
+
+        val unitListsState = newData.map { unit ->
+            UnitTabState(
+                tag = unit.id.toString(),
+            ).setUnitTabState(
+                title = unit.title,
+                index = unit.sortOrder,
+                progress = 0.5f,
+                isSelected = false
+            )
+        }
+
         val easy = DifficultyBoxState(tag = "easy").setDifficultyBoxState(
             text = "Εύκολο",
             isSelected = false
@@ -59,28 +53,32 @@ class QuizSelectionScreenProvider @Inject constructor() {
         )
 
         return QuizUnitSelectionScreenState.Data(
-            topBarNavigationState = TopBarNavigationState(
-                navigationIcon = NavigationIcon.BACK,
-                title = "Quiz",
-                chipText = "10 ερωτήσεις",
-                chipIcon = ChipIcon.FLASK,
-                chipColor = ChipColor.PURPLE
-            ),
+            topBarNavigationState = provideTopBarNavigationState(),
             unitPanelState = UnitPanelState(
                 text = "Διάλεξε ενότητα",
                 helpText = "Το ποσοστό δείχνει την επιτυχία σου σε κάθε ενότητα",
-                unitTabs = listOf(unit1, unit2, unit3, unit4, unit5)
+                unitTabs = unitListsState
             ),
             difficultyPanelState = DifficultyPanelState(
                 difficultyBoxes = listOf(easy, medium, hard)
             ),
-            buttonState = ButtonState(
-                tag = "",
-                _mainButtonText = "Ξεκίνα",
-                _buttonLayout = ButtonLayout.ONE_BUTTON
-            )
+            buttonState = provideButtonState()
         )
     }
+
+    private fun provideTopBarNavigationState(): TopBarNavigationState = TopBarNavigationState(
+        navigationIcon = NavigationIcon.BACK,
+        title = "Quiz",
+        chipText = "10 ερωτήσεις",
+        chipIcon = ChipIcon.FLASK,
+        chipColor = ChipColor.PURPLE
+    )
+
+    private fun provideButtonState(): ButtonState = ButtonState(
+        tag = "",
+        _mainButtonText = "Ξεκίνα",
+        _buttonLayout = ButtonLayout.ONE_BUTTON
+    )
 
     fun provideDifficultyLevel(
         tag: String,
@@ -116,6 +114,25 @@ class QuizSelectionScreenProvider @Inject constructor() {
             unitPanelState = oldState.unitPanelState,
             difficultyPanelState = oldState.difficultyPanelState.copy(
                 difficultyBoxes = difficultyBoxes ?: emptyList()
+            )
+        )
+    }
+
+    fun provideSelectedUnit(
+        oldState: QuizUnitSelectionScreenState.Data,
+        tag: String
+    ): QuizUnitSelectionScreenState.Data {
+        val unitTabs = oldState.unitPanelState.unitTabs.map { unit ->
+            unit.setUnitTabState(
+                title = unit.title,
+                index = unit.index,
+                progress = unit.progress,
+                isSelected = unit.tag == tag
+            )
+        }
+        return oldState.copy(
+            unitPanelState = oldState.unitPanelState.setUnitPanelState(
+                unitTabs = unitTabs
             )
         )
     }

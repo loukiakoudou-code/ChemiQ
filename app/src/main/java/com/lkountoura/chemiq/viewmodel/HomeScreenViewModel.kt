@@ -19,6 +19,8 @@ interface HomeScreenViewModelActions {
 sealed interface HomeNavigation {
     data object ToTopicSelect : HomeNavigation
     data object ToPeriodicTable : HomeNavigation
+
+    data object TimeAttack : HomeNavigation
 }
 
 @HiltViewModel
@@ -39,6 +41,7 @@ class HomeScreenViewModel @Inject constructor(
             when (tag) {
                 "quiz" -> _navigation.send(HomeNavigation.ToTopicSelect)
                 "periodic" -> _navigation.send(HomeNavigation.ToPeriodicTable)
+                "time_attack" -> _navigation.send(HomeNavigation.TimeAttack)
             }
         }
     }
