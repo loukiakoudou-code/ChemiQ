@@ -16,7 +16,7 @@ fun QuestionPanel(
     modifier: Modifier = Modifier,
     events: QuestionPanelEvents? = null,
 ) {
-    val tabEvents = QuestionTabEvents(onPressed = events?.onPressed)
+    val tabEvents = if (state.isLocked) null else QuestionTabEvents(onPressed = events?.onPressed)
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -41,8 +41,8 @@ fun QuestionPanel(
 @Immutable
 data class QuestionPanelState(
     val questionTab: List<QuestionTabState> = emptyList(),
-
-    ) {
+    val isLocked: Boolean = false,
+) {
     fun setQuestionPanelState(questionTab: List<QuestionTabState>): QuestionPanelState =
         copy(questionTab = questionTab)
 }

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lkountoura.chemiq.provider.QuizSelectionScreenProvider
 import com.lkountoura.chemiq.ui.state.QuizUnitSelectionScreenState
-import com.lkountoura.chemiq.usecase.FetchUnitsUseCase
-import com.lkountoura.chemiq.usecase.ObserveUnitsUseCase
+import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.FetchUnitsUseCase
+import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.ObserveUnitsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

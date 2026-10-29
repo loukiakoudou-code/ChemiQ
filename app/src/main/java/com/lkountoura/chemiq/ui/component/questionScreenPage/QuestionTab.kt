@@ -46,7 +46,7 @@ fun QuestionTab(
             .clip(shape)
             .background(status.backgroundColor)
             .border(status.borderWidth, status.borderColor, shape)
-            .clickable { events?.onPressed?.invoke(state.tag) }
+            .clickable(enabled = onPressed != null) { onPressed?.invoke(state.tag) }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(14.dp)

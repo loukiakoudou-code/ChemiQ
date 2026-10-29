@@ -39,15 +39,15 @@ class QuizSelectionScreenProvider @Inject constructor() {
             )
         }
 
-        val easy = DifficultyBoxState(tag = "easy").setDifficultyBoxState(
+        val easy = DifficultyBoxState(tag = "1").setDifficultyBoxState(
             text = "Εύκολο",
             isSelected = false
         )
-        val medium = DifficultyBoxState(tag = "medium").setDifficultyBoxState(
+        val medium = DifficultyBoxState(tag = "2").setDifficultyBoxState(
             text = "Μέτριο",
             isSelected = true
         )
-        val hard = DifficultyBoxState(tag = "hard").setDifficultyBoxState(
+        val hard = DifficultyBoxState(tag = "3").setDifficultyBoxState(
             text = "Δύσκολο",
             isSelected = false
         )
@@ -85,27 +85,8 @@ class QuizSelectionScreenProvider @Inject constructor() {
         oldState: QuizUnitSelectionScreenState
     ): QuizUnitSelectionScreenState.Data {
 
-        val difficultyBoxes = when (tag) {
-            "easy" -> {
-                oldState.difficultyPanelState.difficultyBoxes.map { box ->
-                    box.copy(isSelected = box.tag == tag)
-                }
-            }
-
-            "medium" -> {
-                oldState.difficultyPanelState.difficultyBoxes.map { box ->
-                    box.copy(isSelected = box.tag == tag)
-                }
-
-            }
-
-            "hard" -> {
-                oldState.difficultyPanelState.difficultyBoxes.map { box ->
-                    box.copy(isSelected = box.tag == tag)
-                }
-            }
-
-            else -> null
+        val difficultyBoxes = oldState.difficultyPanelState.difficultyBoxes.map { box ->
+            box.copy(isSelected = box.tag == tag)
         }
 
         return QuizUnitSelectionScreenState.Data(
@@ -113,7 +94,7 @@ class QuizSelectionScreenProvider @Inject constructor() {
             topBarNavigationState = oldState.topBarNavigationState,
             unitPanelState = oldState.unitPanelState,
             difficultyPanelState = oldState.difficultyPanelState.copy(
-                difficultyBoxes = difficultyBoxes ?: emptyList()
+                difficultyBoxes = difficultyBoxes
             )
         )
     }

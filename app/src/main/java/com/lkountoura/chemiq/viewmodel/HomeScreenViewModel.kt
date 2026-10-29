@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lkountoura.chemiq.provider.HomeScreenProvider
 import com.lkountoura.chemiq.ui.state.HomeScreenState
+import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveReviewQuestionsCountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +27,8 @@ sealed interface HomeNavigation {
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    provider: HomeScreenProvider
+    private val provider: HomeScreenProvider,
+    val observeReviewQuestionsCountUseCase: ObserveReviewQuestionsCountUseCase,
 ) : ViewModel(), HomeScreenViewModelActions {
 
     private val _navigation = Channel<HomeNavigation>()
@@ -35,6 +38,20 @@ class HomeScreenViewModel @Inject constructor(
         MutableStateFlow<HomeScreenState>(provider.provideData())
     val uiState: MutableStateFlow<HomeScreenState>
         get() = _uiState
+
+    init {
+        observeReviewQuestionsCount()
+    }
+
+    private fun observeReviewQuestionsCount() {
+        viewModelScope.launch {
+            observeReviewQuestionsCountUseCase.execute().collect { count ->
+                _uiState.update {
+                    provider.provideData(reviewQuestionsCount = count)
+                }
+            }
+        }
+    }
 
     override fun onGameTabPressed(tag: String) {
         viewModelScope.launch {

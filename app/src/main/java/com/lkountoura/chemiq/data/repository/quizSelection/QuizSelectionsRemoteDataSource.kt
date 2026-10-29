@@ -13,7 +13,7 @@ interface QuizSelectionsRemoteDataSource {
 }
 
 class QuizSelectionsRemoteDataSourceImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
 ) : QuizSelectionsRemoteDataSource {
 
     private val json = Json { ignoreUnknownKeys = true }

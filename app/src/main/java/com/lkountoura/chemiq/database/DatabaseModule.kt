@@ -2,6 +2,7 @@ package com.lkountoura.chemiq.database
 
 import android.content.Context
 import androidx.room.Room
+import com.lkountoura.chemiq.database.dao.QuestionDao
 import com.lkountoura.chemiq.database.dao.QuizSelectionsDao
 import dagger.Module
 import dagger.Provides
@@ -24,11 +25,9 @@ object DatabaseModule {
     @Provides
     fun provideQuizSelectionsDao(db: ChemiqDatabase): QuizSelectionsDao = db.unitDao()
 
-//    @Provides
-//    fun provideUnitDao(db: ChemiqDatabase): UnitDao = db.unitDao()
-//
-//    @Provides
-//    fun provideQuestionDao(db: ChemiqDatabase): QuestionDao = db.questionDao()
+    @Provides
+    fun provideQuestionDao(db: ChemiqDatabase): QuestionDao = db.questionDao()
+
 //
 //    @Provides
 //    fun provideAnswerDao(db: ChemiqDatabase): AnswerDao = db.answerDao()

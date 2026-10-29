@@ -54,7 +54,12 @@ fun ChemiQNavHost(
             )
         }
         composable<Question> {
-            QuestionScreen()
+            QuestionScreen(
+                onClosePressed = {
+                    // A typed pop is a no-op on a second tap, so a double tap can't also close the unit selection.
+                    navController.popBackStack<Question>(inclusive = true)
+                }
+            )
         }
 
         composable<TimeAttack> {

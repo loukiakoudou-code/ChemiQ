@@ -3,7 +3,7 @@ package com.lkountoura.chemiq.data.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuestionsResponse(
+data class QuestionResponse(
     val id: Int,
     val unitId: Int,
     val difficulty: Int,

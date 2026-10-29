@@ -5,12 +5,13 @@ import com.lkountoura.chemiq.R
 import com.lkountoura.chemiq.ui.component.homePage.GamePanelState
 import com.lkountoura.chemiq.ui.component.homePage.GameTabState
 import com.lkountoura.chemiq.ui.component.homePage.HeaderState
+import com.lkountoura.chemiq.ui.component.homePage.ReviewBannerState
 import com.lkountoura.chemiq.ui.state.HomeScreenState
 import javax.inject.Inject
 
 class HomeScreenProvider @Inject constructor() {
 
-    fun provideData(): HomeScreenState.Data {
+    fun provideData(reviewQuestionsCount: Int = 0): HomeScreenState.Data {
 
         val quiz = GameTabState(tag = "quiz").setGameState(
             title = "Quiz",
@@ -62,7 +63,23 @@ class HomeScreenProvider @Inject constructor() {
                 gameTabs = listOf(quiz, timeAttack, periodic, balance, match),
                 text = "Παιχνίδια",
                 helpText = "5 τρόποι εξάσκησης"
-            )
+            ),
+            reviewBannerState = provideReviewBannerState(reviewQuestionsCount)
+        )
+    }
+
+    private fun provideReviewBannerState(reviewQuestionsCount: Int): ReviewBannerState? {
+        if (reviewQuestionsCount <= 0) return null
+
+        val title = if (reviewQuestionsCount == 1) {
+            "1 ερώτηση περιμένει"
+        } else {
+            "$reviewQuestionsCount ερωτήσεις περιμένουν"
+        }
+
+        return ReviewBannerState(
+            title = title,
+            description = "Επανάληψη λαθών"
         )
     }
 }

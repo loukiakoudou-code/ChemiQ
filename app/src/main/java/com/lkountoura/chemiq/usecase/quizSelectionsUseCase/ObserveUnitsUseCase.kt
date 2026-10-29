@@ -1,4 +1,4 @@
-package com.lkountoura.chemiq.usecase
+package com.lkountoura.chemiq.usecase.quizSelectionsUseCase
 
 import com.lkountoura.chemiq.data.dto.QuizSelectionUnitDTO
 import com.lkountoura.chemiq.data.repository.quizSelection.QuizSelectionsRepository

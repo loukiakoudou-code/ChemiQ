@@ -2,15 +2,18 @@ package com.lkountoura.chemiq.ui.screen.Home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lkountoura.chemiq.ui.component.homePage.GamePanel
 import com.lkountoura.chemiq.ui.component.homePage.GamePanelEvents
 import com.lkountoura.chemiq.ui.component.homePage.Header
+import com.lkountoura.chemiq.ui.component.homePage.ReviewBanner
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
 import com.lkountoura.chemiq.viewmodel.HomeScreenViewModel
 import com.lkountoura.chemiq.viewmodel.HomeScreenViewModelActions
@@ -45,6 +48,13 @@ fun HomeScreen(
                 }
             )
         )
+
+        uiState.reviewBannerState?.let { reviewBannerState ->
+            ReviewBanner(
+                state = reviewBannerState,
+                modifier = Modifier.padding(all = 16.dp)
+            )
+        }
     }
 
 }
