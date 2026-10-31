@@ -1,6 +1,7 @@
 package com.lkountoura.chemiq.converter
 
 import com.lkountoura.chemiq.data.response.QuestionResponse
+import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.QuestionEntity
 
 class QuestionConverter {
@@ -22,5 +23,17 @@ class QuestionConverter {
                 explanation = response.explanation
             )
         }
+    }
+
+    fun convert(
+        time: Long?,
+        seri: Int,
+        correctAnswers: Int
+    ): GameResultEntity {
+        return GameResultEntity.build(
+            time = time,
+            seri = seri,
+            correctAnswers = correctAnswers
+        )
     }
 }

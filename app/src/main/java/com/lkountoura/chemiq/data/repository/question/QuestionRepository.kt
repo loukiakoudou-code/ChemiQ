@@ -3,6 +3,7 @@ package com.lkountoura.chemiq.data.repository.question
 import com.lkountoura.chemiq.converter.QuestionConverter
 import com.lkountoura.chemiq.converter.dtoConverter.QuestionDTOConverter
 import com.lkountoura.chemiq.data.dto.QuestionDTO
+import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,6 +18,12 @@ interface QuestionRepository {
     ): Flow<List<QuestionDTO>>
 
     suspend fun storeWrongAnswer(questionId: Int)
+
+    suspend fun storeResults(
+        time: Long?,
+        seri: Int,
+        correctAnswers: Int
+    )
 
     fun observeReviewQuestionsCount(): Flow<Int>
 }
@@ -53,6 +60,22 @@ class QuestionRepositoryImpl @Inject constructor(
 
     override suspend fun storeWrongAnswer(questionId: Int) {
         localDataSource.storeReviewQuestion(ReviewQuestionEntity(questionId = questionId))
+    }
+
+    override suspend fun storeResults(
+        time: Long?,
+        seri: Int,
+        correctAnswers: Int
+    ) {
+        val converter = QuestionConverter()
+
+        val gameResultEntity = converter.convert(
+            time = time,
+            seri = seri,
+            correctAnswers = correctAnswers
+        )
+
+        localDataSource.storeResults(gameResultEntity)
     }
 
     override fun observeReviewQuestionsCount(): Flow<Int> {

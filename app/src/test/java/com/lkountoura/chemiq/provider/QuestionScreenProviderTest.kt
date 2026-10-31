@@ -3,7 +3,7 @@ package com.lkountoura.chemiq.provider
 import com.lkountoura.chemiq.data.dto.QuestionDTO
 import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionStatus
 import com.lkountoura.chemiq.ui.component.questionScreenPage.SegmentStatus
-import com.lkountoura.chemiq.viewmodel.QuizAttempt
+import com.lkountoura.chemiq.viewmodel.helpers.QuizAttempt
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull

@@ -14,7 +14,7 @@ import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionTabState
 import com.lkountoura.chemiq.ui.component.questionScreenPage.SegmentState
 import com.lkountoura.chemiq.ui.component.questionScreenPage.SegmentStatus
 import com.lkountoura.chemiq.ui.state.QuestionScreenState
-import com.lkountoura.chemiq.viewmodel.QuizAttempt
+import com.lkountoura.chemiq.viewmodel.helpers.QuizAttempt
 import javax.inject.Inject
 
 class QuestionScreenProvider @Inject constructor() {

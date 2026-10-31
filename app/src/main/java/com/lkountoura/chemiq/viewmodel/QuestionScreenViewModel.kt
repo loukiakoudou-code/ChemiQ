@@ -1,85 +1,26 @@
 package com.lkountoura.chemiq.viewmodel
 
+import android.os.SystemClock
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.lkountoura.chemiq.data.dto.QuestionDTO
 import com.lkountoura.chemiq.navigation.routes.Question
 import com.lkountoura.chemiq.provider.QuestionScreenProvider
 import com.lkountoura.chemiq.ui.state.QuestionScreenState
 import com.lkountoura.chemiq.usecase.questionsUseCase.FetchQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveQuestionsUseCase
+import com.lkountoura.chemiq.usecase.questionsUseCase.StoreResultsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCase
+import com.lkountoura.chemiq.viewmodel.helpers.QuizAttempt
+import com.lkountoura.chemiq.viewmodel.helpers.ScreenDwellAccumulator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
-data class QuizAttempt(
-    val questions: List<QuestionDTO>,
-    val currentIndex: Int = 0,
-    val selectedOptions: List<Int?> = List(questions.size) { null },
-) {
-    val currentQuestion: QuestionDTO
-        get() = questions[currentIndex]
-
-    val currentSelection: Int?
-        get() = selectedOptions[currentIndex]
-
-    val isLast: Boolean
-        get() = currentIndex == questions.lastIndex
-
-    fun isCorrect(index: Int): Boolean? =
-        selectedOptions[index]?.let { option -> option == questions[index].correct }
-
-    fun answer(option: Int): QuizAttempt {
-        if (currentSelection != null) return this
-        return copy(
-            selectedOptions = selectedOptions.toMutableList().also { it[currentIndex] = option }
-        )
-    }
-
-    fun next(): QuizAttempt {
-        if (currentSelection == null || isLast) return this
-        return copy(currentIndex = currentIndex + 1)
-    }
-
-    companion object {
-        fun draw(
-            pool: List<QuestionDTO>,
-            size: Int,
-            random: Random = Random.Default,
-        ): QuizAttempt = QuizAttempt(
-            questions = pool.distinctBy { it.id }.shuffled(random).take(size)
-        )
-
-        fun restore(
-            pool: List<QuestionDTO>,
-            questionIds: IntArray?,
-            currentIndex: Int?,
-            selectedOptions: IntArray?,
-        ): QuizAttempt? {
-            if (questionIds == null || currentIndex == null || selectedOptions == null) return null
-            if (questionIds.isEmpty() || selectedOptions.size != questionIds.size) return null
-            if (currentIndex !in questionIds.indices) return null
-
-            val poolById = pool.associateBy { it.id }
-            val questions = questionIds.map { id -> poolById[id] ?: return null }
-
-            return QuizAttempt(
-                questions = questions,
-                currentIndex = currentIndex,
-                selectedOptions = selectedOptions.map { option -> option.takeIf { it != NO_OPTION } }
-            )
-        }
-
-        const val NO_OPTION = 0
-    }
-}
 
 @HiltViewModel
 class QuestionScreenViewModel @Inject constructor(
@@ -88,8 +29,13 @@ class QuestionScreenViewModel @Inject constructor(
     val fetchQuestionsUseCase: FetchQuestionsUseCase,
     val observeQuestionsUseCase: ObserveQuestionsUseCase,
     val storeWrongAnswerUseCase: StoreWrongAnswerUseCase,
+    val storeResultsUseCase: StoreResultsUseCase,
 ) : ViewModel() {
     private val route = savedStateHandle.toRoute<Question>()
+    private val dwell = ScreenDwellAccumulator(
+        initialMs = savedStateHandle.get<Long>(KEY_DWELL_MS) ?: 0L
+    )
+
     private var _uiState: MutableStateFlow<QuestionScreenState> =
         MutableStateFlow<QuestionScreenState>(provider.provideLoading())
     val uiState: MutableStateFlow<QuestionScreenState>
@@ -109,7 +55,6 @@ class QuestionScreenViewModel @Inject constructor(
     }
 
     private suspend fun loadAttempt() {
-        // One snapshot per attempt: later Room emissions must not reshuffle or replace the questions.
         val pool = observeQuestionsUseCase.execute(
             unitId = route.topicId,
             difficulty = route.difficulty.toIntOrNull() ?: 2
@@ -130,6 +75,16 @@ class QuestionScreenViewModel @Inject constructor(
         updateAttempt(loadedAttempt)
     }
 
+    fun onScreenStarted() {
+        if (attempt?.isFinished == true) return
+        dwell.onForeground(SystemClock.elapsedRealtime())
+    }
+
+    fun onScreenStopped() {
+        dwell.onBackground(SystemClock.elapsedRealtime())
+        savedStateHandle[KEY_DWELL_MS] = dwell.accumulatedMs
+    }
+
     fun onAnswerPressed(tag: String) {
         val currentAttempt = attempt ?: return
         val option = tag.toIntOrNull() ?: return
@@ -143,6 +98,22 @@ class QuestionScreenViewModel @Inject constructor(
             viewModelScope.launch {
                 storeWrongAnswerUseCase.execute(questionId = answeredAttempt.currentQuestion.id)
             }
+        }
+
+        if (answeredAttempt.isFinished) {
+            finishAttempt(answeredAttempt)
+        }
+    }
+
+    private fun finishAttempt(finishedAttempt: QuizAttempt) {
+        val timeMs = dwell.finish(SystemClock.elapsedRealtime())
+
+        viewModelScope.launch {
+            storeResultsUseCase.execute(
+                time = timeMs,
+                seri = finishedAttempt.bestStreak,
+                correctAnswers = finishedAttempt.correctCount
+            )
         }
     }
 
@@ -173,5 +144,6 @@ class QuestionScreenViewModel @Inject constructor(
         const val KEY_QUESTION_IDS = "quiz_question_ids"
         const val KEY_CURRENT_INDEX = "quiz_current_index"
         const val KEY_SELECTED_OPTIONS = "quiz_selected_options"
+        const val KEY_DWELL_MS = "quiz_dwell_ms"
     }
 }

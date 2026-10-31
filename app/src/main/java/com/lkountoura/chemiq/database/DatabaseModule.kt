@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.lkountoura.chemiq.database.dao.QuestionDao
 import com.lkountoura.chemiq.database.dao.QuizSelectionsDao
+import com.lkountoura.chemiq.database.dao.ResultDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +29,6 @@ object DatabaseModule {
     @Provides
     fun provideQuestionDao(db: ChemiqDatabase): QuestionDao = db.questionDao()
 
-//
-//    @Provides
-//    fun provideAnswerDao(db: ChemiqDatabase): AnswerDao = db.answerDao()
+    @Provides
+    fun provideResultDao(db: ChemiqDatabase): ResultDao = db.resultDao()
 }

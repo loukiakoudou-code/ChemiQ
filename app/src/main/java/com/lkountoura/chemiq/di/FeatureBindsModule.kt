@@ -13,18 +13,26 @@ import com.lkountoura.chemiq.data.repository.quizSelection.QuizSelectionsRemoteD
 import com.lkountoura.chemiq.data.repository.quizSelection.QuizSelectionsRemoteDataSourceImpl
 import com.lkountoura.chemiq.data.repository.quizSelection.QuizSelectionsRepository
 import com.lkountoura.chemiq.data.repository.quizSelection.QuizSelectionsRepositoryImpl
+import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSource
+import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSourceImpl
+import com.lkountoura.chemiq.data.repository.result.ResultRepository
+import com.lkountoura.chemiq.data.repository.result.ResultRepositoryImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.FetchQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveQuestionsUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveReviewQuestionsCountUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveReviewQuestionsCountUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreQuestionsUseCaseImpl
+import com.lkountoura.chemiq.usecase.questionsUseCase.StoreResultsUseCase
+import com.lkountoura.chemiq.usecase.questionsUseCase.StoreResultsUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCaseImpl
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.FetchUnitsUseCase
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.ObserveUnitsUseCase
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.ObserveUnitsUseCaseImpl
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.StoreUnitsUseCaseImpl
+import com.lkountoura.chemiq.usecase.resultUseCase.ObserveResultUseCase
+import com.lkountoura.chemiq.usecase.resultUseCase.ObserveResultUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -43,6 +51,18 @@ abstract class FeatureBindsModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindObserveResultUseCase(
+        observeResultUseCaseImpl: ObserveResultUseCaseImpl
+    ): ObserveResultUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindStoreResultsUseCase(
+        storeResultsUseCaseImpl: StoreResultsUseCaseImpl
+    ): StoreResultsUseCase
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindObserveUnitsUseCase(
         observeUnitsUseCaseImpl: ObserveUnitsUseCaseImpl
     ): ObserveUnitsUseCase
@@ -55,6 +75,13 @@ abstract class FeatureBindsModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun bindResultRepository(
+        resultRepositoryImpl: ResultRepositoryImpl
+    ): ResultRepository
+
+
+    @Binds
+    @ViewModelScoped
     abstract fun bindQuizSelectionsRemoteDataSource(
         quizSelectionsRemoteDataSourceImpl: QuizSelectionsRemoteDataSourceImpl
     ): QuizSelectionsRemoteDataSource
@@ -64,6 +91,12 @@ abstract class FeatureBindsModule {
     abstract fun bindQuizSelectionsLocalDataSource(
         quizSelectionsLocalDataSourceImpl: QuizSelectionsLocalDataSourceImpl
     ): QuizSelectionsLocalDataSource
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindObserveResultLocalDataSource(
+        resultLocalDataSourceImpl: ResultLocalDataSourceImpl
+    ): ResultLocalDataSource
 
     @Binds
     @ViewModelScoped

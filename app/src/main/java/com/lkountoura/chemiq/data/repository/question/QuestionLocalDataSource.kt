@@ -1,6 +1,7 @@
 package com.lkountoura.chemiq.data.repository.question
 
 import com.lkountoura.chemiq.database.dao.QuestionDao
+import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.QuestionEntity
 import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +12,8 @@ import javax.inject.Inject
 interface QuestionLocalDataSource {
     suspend fun storeQuestions(questions: List<QuestionEntity>)
 
+    suspend fun storeResults(results: GameResultEntity)
+
     fun observeQuestions(
         unitId: Int,
         difficulty: Int
@@ -19,6 +22,7 @@ interface QuestionLocalDataSource {
     suspend fun storeReviewQuestion(reviewQuestion: ReviewQuestionEntity)
 
     fun observeReviewQuestionsCount(): Flow<Int>
+
 }
 
 class QuestionLocalDataSourceImpl @Inject constructor(
@@ -28,6 +32,12 @@ class QuestionLocalDataSourceImpl @Inject constructor(
         withContext(Dispatchers.IO) {
 
             dao.storeQuestions(questions)
+        }
+    }
+
+    override suspend fun storeResults(results: GameResultEntity) {
+        withContext(Dispatchers.IO){
+            dao.storeResults(results)
         }
     }
 
