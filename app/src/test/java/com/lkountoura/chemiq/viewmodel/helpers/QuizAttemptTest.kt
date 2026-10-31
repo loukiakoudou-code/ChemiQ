@@ -1,7 +1,8 @@
-package com.lkountoura.chemiq.viewmodel
+package com.lkountoura.chemiq.viewmodel.helpers
 
 import com.lkountoura.chemiq.data.dto.QuestionDTO
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -183,5 +184,43 @@ class QuizAttemptTest {
         )
 
         assertNull(restored)
+    }
+
+    private fun answered(questions: List<QuestionDTO>, options: List<Int>): QuizAttempt =
+        options.foldIndexed(QuizAttempt(questions = questions)) { index, attempt, option ->
+            val answeredAttempt = attempt.answer(option)
+            if (index < options.lastIndex) answeredAttempt.next() else answeredAttempt
+        }
+
+    @Test
+    fun isFinished_onlyOnceTheLastQuestionIsAnswered() {
+        val questions = pool(2)
+
+        assertFalse(answered(questions, options = listOf(1)).isFinished)
+        assertFalse(answered(questions, options = listOf(1)).next().isFinished)
+        assertTrue(answered(questions, options = listOf(1, 1)).isFinished)
+    }
+
+    @Test
+    fun correctCount_countsOnlyCorrectAnswers() {
+        val questions = (1..3).map { question(id = it, correct = 1) }
+
+        val attempt = answered(questions, options = listOf(1, 4, 1))
+
+        assertEquals(2, attempt.correctCount)
+    }
+
+    @Test
+    fun bestStreak_isTheLongestRunOfCorrectAnswers() {
+        val questions = (1..6).map { question(id = it, correct = 1) }
+
+        val attempt = answered(questions, options = listOf(1, 1, 2, 1, 1, 1))
+
+        assertEquals(3, attempt.bestStreak)
+    }
+
+    @Test
+    fun bestStreak_isZeroWithoutCorrectAnswers() {
+        assertEquals(0, QuizAttempt(questions = pool(3)).bestStreak)
     }
 }

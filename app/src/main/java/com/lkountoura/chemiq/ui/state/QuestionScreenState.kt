@@ -16,7 +16,7 @@ sealed class QuestionScreenState(
     open val explanationPanelState: ExplanationPanelState?,
     open val questionCardState: QuestionCardState,
     open val questionProgressPanelState: QuestionProgressPanelState,
-    open val buttonState: ButtonState?
+    open val buttonState: ButtonState?,
 ) {
     data class Loading(
         override val questionPanelState: QuestionPanelState,
@@ -40,14 +40,15 @@ sealed class QuestionScreenState(
         override val explanationPanelState: ExplanationPanelState?,
         override val questionCardState: QuestionCardState,
         override val questionProgressPanelState: QuestionProgressPanelState,
-        override val buttonState: ButtonState?
+        override val buttonState: ButtonState?,
     ) : QuestionScreenState(
         questionPanelState = questionPanelState,
         topBarNavigationState = topBarNavigationState,
         explanationPanelState = explanationPanelState,
         questionCardState = questionCardState,
         questionProgressPanelState = questionProgressPanelState,
-        buttonState = buttonState
+        buttonState = buttonState,
+
     )
 
     data class Empty(
