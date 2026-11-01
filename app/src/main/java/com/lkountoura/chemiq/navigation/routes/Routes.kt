@@ -21,7 +21,7 @@ data class TopicSelect(val game: String)
 data class Question(val topicId: Int, val difficulty: String)
 
 @Serializable
-data class Results(val correct: Int, val total: Int)
+object Results
 
 @Serializable
 object PeriodicTable

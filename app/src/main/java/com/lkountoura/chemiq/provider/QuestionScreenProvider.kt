@@ -89,7 +89,16 @@ class QuestionScreenProvider @Inject constructor() {
                     _buttonLayout = ButtonLayout.ONE_BUTTON
                 )
             } else {
-                null
+                if (attempt.isLast && isAnswered) {
+                    ButtonState(
+                        tag = "result",
+                        _mainButtonText = "Τέλος",
+                        _buttonLayout = ButtonLayout.ONE_BUTTON
+
+                    )
+                } else {
+                    null
+                }
             }
         )
     }

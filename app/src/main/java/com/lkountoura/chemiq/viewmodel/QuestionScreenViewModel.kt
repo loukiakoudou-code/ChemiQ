@@ -15,11 +15,18 @@ import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCase
 import com.lkountoura.chemiq.viewmodel.helpers.QuizAttempt
 import com.lkountoura.chemiq.viewmodel.helpers.ScreenDwellAccumulator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+sealed interface QuestionNavigation {
+    data object Back : QuestionNavigation
+    data object End : QuestionNavigation
+}
 
 
 @HiltViewModel
@@ -32,6 +39,8 @@ class QuestionScreenViewModel @Inject constructor(
     val storeResultsUseCase: StoreResultsUseCase,
 ) : ViewModel() {
     private val route = savedStateHandle.toRoute<Question>()
+    private val _navigation = Channel<QuestionNavigation>()
+    val navigation = _navigation.receiveAsFlow()
     private val dwell = ScreenDwellAccumulator(
         initialMs = savedStateHandle.get<Long>(KEY_DWELL_MS) ?: 0L
     )
@@ -117,13 +126,30 @@ class QuestionScreenViewModel @Inject constructor(
         }
     }
 
-    fun onNextPressed() {
+    fun onNextPressed(tag: String) {
+        if (tag == "result") {
+            navigateToResults()
+            return
+        }
+
         val currentAttempt = attempt ?: return
 
         val nextAttempt = currentAttempt.next()
         if (nextAttempt == currentAttempt) return
 
         updateAttempt(nextAttempt)
+    }
+
+    private fun navigateToResults() {
+        viewModelScope.launch {
+            _navigation.send(QuestionNavigation.End)
+        }
+    }
+
+    fun closeQuizPressed() {
+        viewModelScope.launch {
+            _navigation.send(QuestionNavigation.Back)
+        }
     }
 
     private fun updateAttempt(newAttempt: QuizAttempt) {

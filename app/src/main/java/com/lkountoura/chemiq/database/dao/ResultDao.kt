@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ResultDao {
-    @Query("SELECT MAX(id) FROM gameResult")
-    fun observeResults(): Flow<GameResultEntity>
+    @Query("SELECT * FROM gameResult ORDER BY id DESC LIMIT 1")
+    fun observeResults(): Flow<GameResultEntity?>
 }

@@ -25,13 +25,14 @@ import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionPanelEvents
 import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionProgressPanel
 import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionSkeleton
 import com.lkountoura.chemiq.ui.state.QuestionScreenState
+import com.lkountoura.chemiq.viewmodel.QuestionNavigation
 import com.lkountoura.chemiq.viewmodel.QuestionScreenViewModel
 
 
 @Composable
 fun QuestionScreen(
     viewModel: QuestionScreenViewModel = hiltViewModel(),
-    onClosePressed: (() -> Unit)? = null,
+    onNavigate: (QuestionNavigation) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -40,13 +41,19 @@ fun QuestionScreen(
         onStopOrDispose { viewModel.onScreenStopped() }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.navigation.collect { event ->
+            onNavigate(event)
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         TopBarNavigation(
             state = uiState.topBarNavigationState,
             events = TopBarNavigationEvents(
                 onNavigationPressed = {
-                    onClosePressed?.invoke()
+                    viewModel.closeQuizPressed()
                 }
             )
         )
@@ -113,8 +120,8 @@ fun QuestionScreen(
                     ChemiQButton(
                         state = buttonState,
                         events = ButtonActionsEvents(
-                            onMainButtonPressed = {
-                                viewModel.onNextPressed()
+                            onMainButtonPressed = { tag ->
+                                viewModel.onNextPressed(tag)
                             }
                         ),
                         modifier = Modifier.padding(all = 16.dp)

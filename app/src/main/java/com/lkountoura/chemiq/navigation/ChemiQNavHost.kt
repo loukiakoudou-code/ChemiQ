@@ -8,13 +8,16 @@ import androidx.navigation.compose.composable
 import com.lkountoura.chemiq.navigation.routes.Home
 import com.lkountoura.chemiq.navigation.routes.PeriodicTable
 import com.lkountoura.chemiq.navigation.routes.Question
+import com.lkountoura.chemiq.navigation.routes.Results
 import com.lkountoura.chemiq.navigation.routes.TimeAttack
 import com.lkountoura.chemiq.navigation.routes.TopicSelect
 import com.lkountoura.chemiq.ui.screen.Home.HomeScreen
 import com.lkountoura.chemiq.ui.screen.QuestionScreen
 import com.lkountoura.chemiq.ui.screen.QuizSelectionScreen
+import com.lkountoura.chemiq.ui.screen.ResultScreen
 import com.lkountoura.chemiq.ui.screen.TimeAttackScreen
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
+import com.lkountoura.chemiq.viewmodel.QuestionNavigation
 
 
 @Composable
@@ -53,11 +56,17 @@ fun ChemiQNavHost(
                 }
             )
         }
+
         composable<Question> {
             QuestionScreen(
-                onClosePressed = {
-                    // A typed pop is a no-op on a second tap, so a double tap can't also close the unit selection.
-                    navController.popBackStack<Question>(inclusive = true)
+                onNavigate = { event ->
+                    when (event) {
+                        QuestionNavigation.Back ->
+                            navController.popBackStack<Question>(inclusive = true)
+
+                        QuestionNavigation.End ->
+                            navController.navigate(Results)
+                    }
                 }
             )
         }
@@ -66,7 +75,9 @@ fun ChemiQNavHost(
             TimeAttackScreen()
         }
 
+        composable<Results> {
+            ResultScreen()
+        }
     }
-
 }
 

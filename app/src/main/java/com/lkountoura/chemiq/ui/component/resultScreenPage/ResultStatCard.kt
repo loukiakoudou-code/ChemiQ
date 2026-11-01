@@ -1,4 +1,4 @@
-package com.lkountoura.chemiq.ui.component
+package com.lkountoura.chemiq.ui.component.resultScreenPage
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lkountoura.chemiq.R
 
 private val StatCardShape = RoundedCornerShape(16.dp)
 private val TileShape = RoundedCornerShape(10.dp)
@@ -42,13 +43,13 @@ fun ResultStatCard(
         Box(
             modifier = Modifier
                 .size(32.dp)
-                .background(state.boxColor, TileShape),
+                .background(state.statType.backgroundColor, TileShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = painterResource(state.icon),
+                painter = painterResource(state.statType.icon),
                 contentDescription = null,
-                tint = state.iconColor,
+                tint = state.statType.iconColor,
                 modifier = Modifier.size(18.dp)
             )
         }
@@ -73,24 +74,27 @@ fun ResultStatCard(
 
 @Immutable
 data class ResultStatCardState(
-    val tag: String = "",
     val result: String = "",
     val title: String = "",
-    val boxColor: Color = Color.Unspecified,
-    val iconColor: Color = Color.Unspecified,
-    @param:DrawableRes val icon: Int = 0,
+    val statType: StatType,
 ) {
     fun setResultStatCardState(
         result: String,
         title: String,
-        boxColor: Color,
-        iconColor: Color,
-        @DrawableRes icon: Int,
+        statType: StatType
     ): ResultStatCardState = copy(
         result = result,
         title = title,
-        boxColor = boxColor,
-        iconColor = iconColor,
-        icon = icon,
+        statType = statType
     )
+}
+
+enum class StatType(
+    @param:DrawableRes val icon: Int,
+    val iconColor: Color,
+    val backgroundColor: Color
+) {
+    XP(R.drawable.ic_star, Color(0xFFF5A524), Color(0xFFFFF4DE)),
+    ACCURACY(R.drawable.ic_target, Color(0xFF12A150), Color(0xFFE3F7EC)),
+    TIME(R.drawable.ic_timer, Color(0xFF5B3DF5), Color(0xFFEEEAFE))
 }

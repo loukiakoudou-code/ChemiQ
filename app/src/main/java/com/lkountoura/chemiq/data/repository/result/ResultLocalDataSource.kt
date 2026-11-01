@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface ResultLocalDataSource {
-    fun observeResults(): Flow<GameResultEntity>
+    fun observeResults(): Flow<GameResultEntity?>
 }
 
 class ResultLocalDataSourceImpl @Inject constructor(
     val dao: ResultDao
 ) : ResultLocalDataSource {
-    override fun observeResults(): Flow<GameResultEntity> {
+    override fun observeResults(): Flow<GameResultEntity?> {
         return dao.observeResults()
     }
 }
