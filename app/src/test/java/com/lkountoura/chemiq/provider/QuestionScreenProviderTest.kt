@@ -101,14 +101,16 @@ class QuestionScreenProviderTest {
     }
 
     @Test
-    fun answeredLastQuestion_hasNoButton() {
+    fun answeredLastQuestion_showsTheFinishButton() {
         val attempt = QuizAttempt(questions = questions)
             .answer(option = 2).next()
             .answer(option = 4).next()
             .answer(option = 1)
+        val buttonState = provider.provideData(attempt).buttonState
 
         assertTrue(attempt.isLast)
-        assertNull(provider.provideData(attempt).buttonState)
+        assertEquals("result", buttonState?.tag)
+        assertEquals("Τέλος", buttonState?.mainButtonText)
         assertTrue(provider.provideData(attempt).questionPanelState.isLocked)
     }
 

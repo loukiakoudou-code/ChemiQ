@@ -18,6 +18,8 @@ import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSourceImpl
 import com.lkountoura.chemiq.data.repository.result.ResultRepository
 import com.lkountoura.chemiq.data.repository.result.ResultRepositoryImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.FetchQuestionsUseCase
+import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveAllQuestionsUseCase
+import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveAllQuestionsUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveQuestionsUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveReviewQuestionsCountUseCase
@@ -27,10 +29,14 @@ import com.lkountoura.chemiq.usecase.questionsUseCase.StoreResultsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreResultsUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCaseImpl
+import com.lkountoura.chemiq.usecase.questionsUseCase.StoreXpUseCase
+import com.lkountoura.chemiq.usecase.questionsUseCase.StoreXpUseCaseImpl
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.FetchUnitsUseCase
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.ObserveUnitsUseCase
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.ObserveUnitsUseCaseImpl
 import com.lkountoura.chemiq.usecase.quizSelectionsUseCase.StoreUnitsUseCaseImpl
+import com.lkountoura.chemiq.usecase.resultUseCase.GetXpUseCase
+import com.lkountoura.chemiq.usecase.resultUseCase.GetXpUseCaseImpl
 import com.lkountoura.chemiq.usecase.resultUseCase.ObserveResultUseCase
 import com.lkountoura.chemiq.usecase.resultUseCase.ObserveResultUseCaseImpl
 import dagger.Binds
@@ -60,6 +66,18 @@ abstract class FeatureBindsModule {
     abstract fun bindStoreResultsUseCase(
         storeResultsUseCaseImpl: StoreResultsUseCaseImpl
     ): StoreResultsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindStoreXpUseCase(
+        storeXpUseCaseImpl: StoreXpUseCaseImpl
+    ): StoreXpUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetXpUseCase(
+        getXpUseCaseImpl: GetXpUseCaseImpl
+    ): GetXpUseCase
 
     @Binds
     @ViewModelScoped
@@ -139,5 +157,11 @@ abstract class FeatureBindsModule {
     abstract fun bindObserveReviewQuestionsCountUseCase(
         observeReviewQuestionsCountUseCaseImpl: ObserveReviewQuestionsCountUseCaseImpl
     ): ObserveReviewQuestionsCountUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindObserveAllQuestionsUseCase(
+        observeAllQuestionsUseCaseImpl: ObserveAllQuestionsUseCaseImpl
+    ): ObserveAllQuestionsUseCase
 
 }

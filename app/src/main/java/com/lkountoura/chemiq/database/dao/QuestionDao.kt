@@ -8,6 +8,7 @@ import androidx.room.Upsert
 import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.QuestionEntity
 import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
+import com.lkountoura.chemiq.database.entities.XpEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,8 +23,14 @@ interface QuestionDao {
     @Upsert
     fun storeResults(results: GameResultEntity)
 
+    @Insert
+    fun storeXp(xp: XpEntity)
+
     @Query("SELECT * FROM question WHERE unitId = :unitId AND difficulty = :difficulty ORDER BY id")
     fun observeQuestions(unitId: Int, difficulty: Int): Flow<List<QuestionEntity>>
+
+    @Query("SELECT * FROM question")
+    fun observeAllQuestions(): Flow<List<QuestionEntity>>
 
     @Query("SELECT COUNT(*) FROM review_question")
     fun observeReviewQuestionsCount(): Flow<Int>

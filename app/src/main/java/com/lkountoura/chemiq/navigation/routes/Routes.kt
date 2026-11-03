@@ -18,7 +18,7 @@ object Settings
 data class TopicSelect(val game: String)
 
 @Serializable
-data class Question(val topicId: Int, val difficulty: String)
+data class Question(val topicId: Int, val difficulty: String, val unitTitle: String)
 
 @Serializable
 object Results

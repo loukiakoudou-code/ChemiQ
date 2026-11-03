@@ -4,5 +4,8 @@ data class GameResultDTO(
     val time: Long?,
     val seri: Int,
     val correctAnswers: Int,
+    val game: String,
+    val unitTitle: String?,
+    val difficulty: Int?
 )
 

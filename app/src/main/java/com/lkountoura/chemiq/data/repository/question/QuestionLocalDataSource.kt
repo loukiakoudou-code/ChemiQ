@@ -4,6 +4,7 @@ import com.lkountoura.chemiq.database.dao.QuestionDao
 import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.QuestionEntity
 import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
+import com.lkountoura.chemiq.database.entities.XpEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -14,6 +15,8 @@ interface QuestionLocalDataSource {
 
     suspend fun storeResults(results: GameResultEntity)
 
+    suspend fun storeXp(xp: XpEntity)
+
     fun observeQuestions(
         unitId: Int,
         difficulty: Int
@@ -22,6 +25,8 @@ interface QuestionLocalDataSource {
     suspend fun storeReviewQuestion(reviewQuestion: ReviewQuestionEntity)
 
     fun observeReviewQuestionsCount(): Flow<Int>
+
+    fun observeAllQuestions(): Flow<List<QuestionEntity>>
 
 }
 
@@ -38,6 +43,12 @@ class QuestionLocalDataSourceImpl @Inject constructor(
     override suspend fun storeResults(results: GameResultEntity) {
         withContext(Dispatchers.IO){
             dao.storeResults(results)
+        }
+    }
+
+    override suspend fun storeXp(xp: XpEntity) {
+        withContext(Dispatchers.IO) {
+            dao.storeXp(xp)
         }
     }
 
@@ -59,5 +70,9 @@ class QuestionLocalDataSourceImpl @Inject constructor(
 
     override fun observeReviewQuestionsCount(): Flow<Int> {
         return dao.observeReviewQuestionsCount()
+    }
+
+    override fun observeAllQuestions(): Flow<List<QuestionEntity>> {
+        return dao.observeAllQuestions()
     }
 }

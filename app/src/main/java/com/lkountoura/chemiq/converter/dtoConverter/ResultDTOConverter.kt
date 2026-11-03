@@ -11,7 +11,10 @@ class ResultDTOConverter {
         return GameResultDTO(
             time = entity.time,
             seri = entity.seri,
-            correctAnswers = entity.correctAnswers
+            correctAnswers = entity.correctAnswers,
+            game = entity.game,
+            unitTitle = entity.unitTitle,
+            difficulty = entity.difficulty
         )
     }
 }

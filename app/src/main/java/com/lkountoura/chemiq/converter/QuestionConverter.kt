@@ -28,12 +28,18 @@ class QuestionConverter {
     fun convert(
         time: Long?,
         seri: Int,
-        correctAnswers: Int
+        correctAnswers: Int,
+        game: String,
+        unitTitle: String?,
+        difficulty: Int
     ): GameResultEntity {
         return GameResultEntity.build(
             time = time,
             seri = seri,
-            correctAnswers = correctAnswers
+            correctAnswers = correctAnswers,
+            game = game,
+            unitTitle = unitTitle,
+            difficulty = difficulty
         )
     }
 }

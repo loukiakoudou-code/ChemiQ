@@ -18,6 +18,7 @@ import com.lkountoura.chemiq.ui.screen.ResultScreen
 import com.lkountoura.chemiq.ui.screen.TimeAttackScreen
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
 import com.lkountoura.chemiq.viewmodel.QuestionNavigation
+import com.lkountoura.chemiq.viewmodel.ResultNavigation
 
 
 @Composable
@@ -51,8 +52,14 @@ fun ChemiQNavHost(
             QuizSelectionScreen(
                 onBackPressed = {
                     navController.popBackStack()
-                }, onStart = { unitId, difficulty ->
-                    navController.navigate(Question(topicId = unitId, difficulty = difficulty))
+                }, onStart = { unitId, difficulty, unitTitle ->
+                    navController.navigate(
+                        Question(
+                            topicId = unitId,
+                            difficulty = difficulty,
+                            unitTitle = unitTitle
+                        )
+                    )
                 }
             )
         }
@@ -65,7 +72,9 @@ fun ChemiQNavHost(
                             navController.popBackStack<Question>(inclusive = true)
 
                         QuestionNavigation.End ->
-                            navController.navigate(Results)
+                            navController.navigate(Results) {
+                                popUpTo<Question> { inclusive = true }
+                            }
                     }
                 }
             )
@@ -76,7 +85,23 @@ fun ChemiQNavHost(
         }
 
         composable<Results> {
-            ResultScreen()
+            ResultScreen(
+                onNavigate = { event ->
+                    when (event) {
+                        ResultNavigation.Home ->
+                            navController.navigate(Home) {
+                                navController.popBackStack<Home>(inclusive = false)
+                            }
+
+                        ResultNavigation.PlayAgain ->
+                            navController.popBackStack<TopicSelect>(inclusive = false)
+
+                        ResultNavigation.Review -> {
+//                            // οθόνη Επανάληψης (Figma 08) – προς το παρόν δεν κάνει τίποτα
+                        }
+                    }
+                }
+            )
         }
     }
 }

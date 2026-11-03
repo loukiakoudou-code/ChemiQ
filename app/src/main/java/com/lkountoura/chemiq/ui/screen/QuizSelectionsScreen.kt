@@ -26,7 +26,7 @@ import com.lkountoura.chemiq.viewmodel.QuizSelectionScreenViewModel
 fun QuizSelectionScreen(
     viewModel: QuizSelectionScreenViewModel = hiltViewModel(),
     onBackPressed: (() -> Unit)? = null,
-    onStart: ((unitId: Int, difficulty: String) -> Unit)? = null,
+    onStart: ((unitId: Int, difficulty: String, unitTitle: String) -> Unit)? = null,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedUnit = uiState.unitPanelState.unitTabs.firstOrNull { it.isSelected }
@@ -86,7 +86,11 @@ fun QuizSelectionScreen(
                     events = ButtonActionsEvents(
                         onMainButtonPressed = {
                             if (selectedUnit != null && selectedDifficulty != null) {
-                                onStart?.invoke(selectedUnit.index, selectedDifficulty.tag)
+                                onStart?.invoke(
+                                    selectedUnit.index,
+                                    selectedDifficulty.tag,
+                                    selectedUnit.title
+                                )
                             }
                         }
                     ),

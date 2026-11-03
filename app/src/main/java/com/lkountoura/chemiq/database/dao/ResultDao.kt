@@ -9,4 +9,10 @@ import kotlinx.coroutines.flow.Flow
 interface ResultDao {
     @Query("SELECT * FROM gameResult ORDER BY id DESC LIMIT 1")
     fun observeResults(): Flow<GameResultEntity?>
+
+    @Query("SELECT xpEarned FROM xp ORDER BY id DESC LIMIT 1")
+    fun getLastXp(): Int?
+
+    @Query("SELECT COALESCE(SUM(xpEarned), 0) FROM xp")
+    fun getTotalXp(): Int
 }

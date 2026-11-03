@@ -12,8 +12,10 @@ import com.lkountoura.chemiq.usecase.questionsUseCase.FetchQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreResultsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.StoreWrongAnswerUseCase
+import com.lkountoura.chemiq.usecase.questionsUseCase.StoreXpUseCase
 import com.lkountoura.chemiq.viewmodel.helpers.QuizAttempt
 import com.lkountoura.chemiq.viewmodel.helpers.ScreenDwellAccumulator
+import com.lkountoura.chemiq.xp.XpRules
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,8 +39,10 @@ class QuestionScreenViewModel @Inject constructor(
     val observeQuestionsUseCase: ObserveQuestionsUseCase,
     val storeWrongAnswerUseCase: StoreWrongAnswerUseCase,
     val storeResultsUseCase: StoreResultsUseCase,
+    val storeXpUseCase: StoreXpUseCase,
 ) : ViewModel() {
     private val route = savedStateHandle.toRoute<Question>()
+    private val difficulty = route.difficulty.toIntOrNull() ?: 2
     private val _navigation = Channel<QuestionNavigation>()
     val navigation = _navigation.receiveAsFlow()
     private val dwell = ScreenDwellAccumulator(
@@ -66,7 +70,7 @@ class QuestionScreenViewModel @Inject constructor(
     private suspend fun loadAttempt() {
         val pool = observeQuestionsUseCase.execute(
             unitId = route.topicId,
-            difficulty = route.difficulty.toIntOrNull() ?: 2
+            difficulty = difficulty
         ).first()
 
         val loadedAttempt = QuizAttempt.restore(
@@ -116,12 +120,22 @@ class QuestionScreenViewModel @Inject constructor(
 
     private fun finishAttempt(finishedAttempt: QuizAttempt) {
         val timeMs = dwell.finish(SystemClock.elapsedRealtime())
+        val xp = XpRules.quizTotal(
+            correct = finishedAttempt.correctCount,
+            total = finishedAttempt.questions.size,
+            difficulty = difficulty
+        )
 
         viewModelScope.launch {
+            // Πρώτα τα XP: όταν η οθόνη αποτελεσμάτων δει το νέο αποτέλεσμα, τα XP είναι ήδη γραμμένα.
+            storeXpUseCase.execute(xpEarned = xp)
             storeResultsUseCase.execute(
                 time = timeMs,
                 seri = finishedAttempt.bestStreak,
-                correctAnswers = finishedAttempt.correctCount
+                correctAnswers = finishedAttempt.correctCount,
+                game = "quiz",
+                unitTitle = route.unitTitle,
+                difficulty = difficulty
             )
         }
     }

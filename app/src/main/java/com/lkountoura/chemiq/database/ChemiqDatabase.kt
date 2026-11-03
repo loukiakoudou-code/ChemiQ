@@ -9,6 +9,7 @@ import com.lkountoura.chemiq.database.dao.ResultDao
 import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.QuestionEntity
 import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
+import com.lkountoura.chemiq.database.entities.XpEntity
 
 @Database(
     entities = [
@@ -16,8 +17,9 @@ import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
         QuestionEntity::class,
         ReviewQuestionEntity::class,
         GameResultEntity::class,
+        XpEntity::class,
     ],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class ChemiqDatabase : RoomDatabase() {

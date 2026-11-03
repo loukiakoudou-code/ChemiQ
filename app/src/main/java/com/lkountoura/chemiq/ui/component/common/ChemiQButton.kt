@@ -106,23 +106,26 @@ private fun ButtonLayoutThree(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         CustomButton(
-            text = state.mainButtonText,
-            containerColor = state.mainButtonColor,
-            contentColor = state.mainTextButtonColor,
-            onClick = { events?.onMainButtonPressed?.invoke(state.tag) },
-            modifier = Modifier.weight(1f)
+            text = state.tertiaryButtonText ?: "",
+            containerColor = state.tertiaryButtonColor,
+            contentColor = state.tertiaryTextButtonColor,
+            onClick = { events?.onTertiaryButtonPressed?.invoke(state.tag) },
+            modifier = Modifier.fillMaxWidth()
         )
         CustomButton(
             text = state.secondaryButtonText ?: "",
             containerColor = state.secondaryButtonColor,
             contentColor = state.secondaryTextButtonColor,
-            onClick = { events?.onSecondaryButtonPressed?.invoke(state.tag) }
+            onClick = { events?.onSecondaryButtonPressed?.invoke(state.tag) },
+            modifier = Modifier.fillMaxWidth(),
+            border = BorderStroke(1.5.dp, Color(0xFFCFCBE0))
         )
         CustomButton(
-            text = state.tertiaryButtonText ?: "",
-            containerColor = state.tertiaryButtonColor,
-            contentColor = state.tertiaryTextButtonColor,
-            onClick = { events?.onTertiaryButtonPressed?.invoke(state.tag) }
+            text = state.mainButtonText,
+            containerColor = state.mainButtonColor,
+            contentColor = state.mainTextButtonColor,
+            onClick = { events?.onMainButtonPressed?.invoke(state.tag) },
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

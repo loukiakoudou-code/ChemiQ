@@ -3,8 +3,8 @@ package com.lkountoura.chemiq.data.repository.question
 import com.lkountoura.chemiq.converter.QuestionConverter
 import com.lkountoura.chemiq.converter.dtoConverter.QuestionDTOConverter
 import com.lkountoura.chemiq.data.dto.QuestionDTO
-import com.lkountoura.chemiq.database.entities.GameResultEntity
 import com.lkountoura.chemiq.database.entities.ReviewQuestionEntity
+import com.lkountoura.chemiq.database.entities.XpEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -22,10 +22,17 @@ interface QuestionRepository {
     suspend fun storeResults(
         time: Long?,
         seri: Int,
-        correctAnswers: Int
+        correctAnswers: Int,
+        game: String,
+        unitTitle: String?,
+        difficulty: Int
     )
 
+    suspend fun storeXp(xpEarned: Int)
+
     fun observeReviewQuestionsCount(): Flow<Int>
+
+    fun observeAllQuestions(): Flow<List<QuestionDTO>>
 }
 
 class QuestionRepositoryImpl @Inject constructor(
@@ -65,20 +72,41 @@ class QuestionRepositoryImpl @Inject constructor(
     override suspend fun storeResults(
         time: Long?,
         seri: Int,
-        correctAnswers: Int
+        correctAnswers: Int,
+        game: String,
+        unitTitle: String?,
+        difficulty: Int
     ) {
         val converter = QuestionConverter()
 
         val gameResultEntity = converter.convert(
             time = time,
             seri = seri,
-            correctAnswers = correctAnswers
+            correctAnswers = correctAnswers,
+            game = game,
+            unitTitle = unitTitle,
+            difficulty = difficulty
         )
 
         localDataSource.storeResults(gameResultEntity)
     }
 
+    override suspend fun storeXp(xpEarned: Int) {
+        localDataSource.storeXp(XpEntity.build(xpEarned = xpEarned))
+    }
+
+
     override fun observeReviewQuestionsCount(): Flow<Int> {
         return localDataSource.observeReviewQuestionsCount()
     }
+
+
+    override fun observeAllQuestions(): Flow<List<QuestionDTO>> {
+        val dtoConverter = QuestionDTOConverter()
+
+        return localDataSource.observeAllQuestions().map { questions ->
+            dtoConverter.convert(listOfQuestionEntities = questions)
+        }
+    }
+
 }
