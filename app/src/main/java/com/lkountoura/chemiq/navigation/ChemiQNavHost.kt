@@ -19,6 +19,7 @@ import com.lkountoura.chemiq.ui.screen.TimeAttackScreen
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
 import com.lkountoura.chemiq.viewmodel.QuestionNavigation
 import com.lkountoura.chemiq.viewmodel.ResultNavigation
+import com.lkountoura.chemiq.viewmodel.TimeAttackNavigation
 
 
 @Composable
@@ -81,7 +82,19 @@ fun ChemiQNavHost(
         }
 
         composable<TimeAttack> {
-            TimeAttackScreen()
+            TimeAttackScreen(
+                onNavigate = { event ->
+                    when (event) {
+                        TimeAttackNavigation.Back ->
+                            navController.popBackStack<Home>(inclusive = false)
+
+                        TimeAttackNavigation.End ->
+                            navController.navigate(Results) {
+                                popUpTo<TimeAttack> { inclusive = true }
+                            }
+                    }
+                }
+            )
         }
 
         composable<Results> {

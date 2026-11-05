@@ -8,10 +8,10 @@ import com.lkountoura.chemiq.ui.component.timeAttackPage.TimerPanelState
 
 @Stable
 sealed class TimeAttackScreenState(
-    open val questionPanelState: QuestionPanelState,
-    open val topBarNavigationState: TopBarNavigationState,
-    open val questionCardState: QuestionCardState,
-    open val timePanelState: TimerPanelState,
+    open val questionPanelState: QuestionPanelState? = null,
+    open val topBarNavigationState: TopBarNavigationState? = null,
+    open val questionCardState: QuestionCardState? = null,
+    open val timePanelState: TimerPanelState? = null,
 ) {
 
     data class Data(
@@ -25,4 +25,6 @@ sealed class TimeAttackScreenState(
         questionCardState = questionCardState,
         timePanelState = timePanelState,
     )
+
+    data object Empty: TimeAttackScreenState()
 }

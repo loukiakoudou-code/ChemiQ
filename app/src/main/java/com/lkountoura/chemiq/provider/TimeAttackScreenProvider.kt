@@ -10,52 +10,70 @@ import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionStatus
 import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionTabState
 import com.lkountoura.chemiq.ui.component.timeAttackPage.TimerPanelState
 import com.lkountoura.chemiq.ui.state.TimeAttackScreenState
+import com.lkountoura.chemiq.viewmodel.helpers.TimeAttackRun
 import javax.inject.Inject
 
 class TimeAttackScreenProvider @Inject constructor() {
-    fun provideData(): TimeAttackScreenState {
-        val answer1 = QuestionTabState(tag = "answer1").setQuestionTabState(
+
+    fun provideEmpty(): TimeAttackScreenState = TimeAttackScreenState.Empty
+
+    fun provideData(run: TimeAttackRun? = null): TimeAttackScreenState {
+        val answer1 = QuestionTabState(tag = "1").setQuestionTabState(
             letter = "A",
-            text = "Οξυγόνο",
-            status = QuestionStatus.DEFAULT
+            text = run?.currentQuestion?.option1 ?: "",
+            status = provideAnswerStatus(option = 1, run = run)
         )
-        val answer2 = QuestionTabState(tag = "answer2").setQuestionTabState(
+        val answer2 = QuestionTabState(tag = "2").setQuestionTabState(
             letter = "B",
-            text = "",
-            status = QuestionStatus.DEFAULT
+            text = run?.currentQuestion?.option2 ?: "",
+            status = provideAnswerStatus(option = 2, run = run)
         )
-        val answer3 = QuestionTabState(tag = "answer3").setQuestionTabState(
-            letter = "C",
-            text = "",
-            status = QuestionStatus.DEFAULT
+        val answer3 = QuestionTabState(tag = "3").setQuestionTabState(
+            letter = "Γ",
+            text = run?.currentQuestion?.option3 ?: "",
+            status = provideAnswerStatus(option = 3, run = run)
         )
-        val answer4 = QuestionTabState(tag = "answer4").setQuestionTabState(
-            letter = "D",
-            text = "",
-            status = QuestionStatus.DEFAULT
+        val answer4 = QuestionTabState(tag = "4").setQuestionTabState(
+            letter = "Δ",
+            text = run?.currentQuestion?.option4 ?: "",
+            status = provideAnswerStatus(option = 4, run = run)
         )
 
         val topBarNavigationState = TopBarNavigationState(
             navigationIcon = NavigationIcon.CLOSE,
             title = "Time Attack",
-            chipText = "7 σωστές", //ο αριθμος να ερχεται αναλογα το σκορ της εκαστοτε στιγμης
+            chipText = "${run?.correctCount.toString()} Σωστές",
             chipColor = ChipColor.GREEN,
             chipIcon = ChipIcon.CHECK
         )
         val questionCardState = QuestionCardState().setQuestionCardState(
-            question = "jlikuyjftjykuljjkjhcgjk"   // να σεταριστεί από βάση
+            question = run?.currentQuestion?.text ?: ""
         )
         return TimeAttackScreenState.Data(
             topBarNavigationState = topBarNavigationState,
             questionCardState = questionCardState,
             timePanelState = TimerPanelState(
-                remainingSeconds = 60,
-                totalSeconds = 60,
-                streak = 0,
+                remainingSeconds = run?.remainingSeconds ?: 60,
+                totalSeconds = TimeAttackRun.TOTAL_SECONDS,
+                streak = run?.streak ?: 0,
             ),
             questionPanelState = QuestionPanelState(
-                listOf(answer1, answer2, answer3, answer4)
+                questionTab = listOf(answer1, answer2, answer3, answer4),
+                isLocked = run?.isAnswered == true
             )
         )
     }
+
+    private fun provideAnswerStatus(option: Int, run: TimeAttackRun?): QuestionStatus {
+        val selectedOption = run?.selectedOption
+        val correctOption = run?.currentQuestion?.correct
+
+        return when {
+            selectedOption == null -> QuestionStatus.DEFAULT
+            option == correctOption -> QuestionStatus.CORRECT
+            option == selectedOption -> QuestionStatus.WRONG
+            else -> QuestionStatus.DIMMED
+        }
+    }
+
 }

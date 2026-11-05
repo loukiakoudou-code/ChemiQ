@@ -25,7 +25,8 @@ interface QuestionRepository {
         correctAnswers: Int,
         game: String,
         unitTitle: String?,
-        difficulty: Int
+        difficulty: Int? = null,
+        answeredCount: Int
     )
 
     suspend fun storeXp(xpEarned: Int)
@@ -75,7 +76,8 @@ class QuestionRepositoryImpl @Inject constructor(
         correctAnswers: Int,
         game: String,
         unitTitle: String?,
-        difficulty: Int
+        difficulty: Int?,
+        answeredCount: Int
     ) {
         val converter = QuestionConverter()
 
@@ -85,7 +87,8 @@ class QuestionRepositoryImpl @Inject constructor(
             correctAnswers = correctAnswers,
             game = game,
             unitTitle = unitTitle,
-            difficulty = difficulty
+            difficulty = difficulty,
+            answeredCount = answeredCount
         )
 
         localDataSource.storeResults(gameResultEntity)

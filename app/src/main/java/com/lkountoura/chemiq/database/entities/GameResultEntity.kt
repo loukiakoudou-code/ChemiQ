@@ -13,6 +13,7 @@ data class GameResultEntity(
     val game: String,
     val unitTitle: String?,
     val difficulty: Int?,
+    val answeredCount: Int?
 ) {
     companion object {
         fun build(
@@ -21,7 +22,8 @@ data class GameResultEntity(
             correctAnswers: Int,
             game: String,
             unitTitle: String?,
-            difficulty: Int
+            difficulty: Int?,
+            answeredCount: Int
         ): GameResultEntity =
             GameResultEntity(
                 time = time,
@@ -29,7 +31,8 @@ data class GameResultEntity(
                 correctAnswers = correctAnswers,
                 game = game,
                 unitTitle = unitTitle,
-                difficulty = difficulty
+                difficulty = difficulty,
+                answeredCount = answeredCount
             )
     }
 }

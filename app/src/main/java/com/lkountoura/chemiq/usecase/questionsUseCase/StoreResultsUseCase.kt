@@ -10,7 +10,9 @@ interface StoreResultsUseCase {
         correctAnswers: Int,
         game: String,
         unitTitle: String?,
-        difficulty: Int)
+        difficulty: Int? = null,
+        answeredCount: Int = 0
+    )
 }
 
 class StoreResultsUseCaseImpl @Inject constructor(
@@ -23,7 +25,8 @@ class StoreResultsUseCaseImpl @Inject constructor(
         correctAnswers: Int,
         game: String,
         unitTitle: String?,
-        difficulty: Int
+        difficulty: Int?,
+        answeredCount: Int
     ) {
         repository.storeResults(
             time,
@@ -31,6 +34,8 @@ class StoreResultsUseCaseImpl @Inject constructor(
             correctAnswers,
             game,
             unitTitle,
-            difficulty)
+            difficulty,
+            answeredCount
+        )
     }
 }

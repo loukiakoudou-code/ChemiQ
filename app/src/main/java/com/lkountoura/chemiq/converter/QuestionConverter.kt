@@ -31,7 +31,8 @@ class QuestionConverter {
         correctAnswers: Int,
         game: String,
         unitTitle: String?,
-        difficulty: Int
+        difficulty: Int?,
+        answeredCount: Int
     ): GameResultEntity {
         return GameResultEntity.build(
             time = time,
@@ -39,7 +40,8 @@ class QuestionConverter {
             correctAnswers = correctAnswers,
             game = game,
             unitTitle = unitTitle,
-            difficulty = difficulty
+            difficulty = difficulty,
+            answeredCount = answeredCount
         )
     }
 }

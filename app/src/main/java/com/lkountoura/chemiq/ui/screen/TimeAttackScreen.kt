@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,67 +28,80 @@ import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionCard
 import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionPanel
 import com.lkountoura.chemiq.ui.component.questionScreenPage.QuestionPanelEvents
 import com.lkountoura.chemiq.ui.component.timeAttackPage.TimerPanel
+import com.lkountoura.chemiq.viewmodel.TimeAttackNavigation
 import com.lkountoura.chemiq.viewmodel.TimeAttackScreenViewModel
 
 @Composable
 fun TimeAttackScreen(
     viewModel: TimeAttackScreenViewModel = hiltViewModel(),
+    onNavigate: (TimeAttackNavigation) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = Modifier,
-        verticalArrangement = Arrangement.spacedBy(90.dp)
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    LaunchedEffect(Unit) {
+        viewModel.navigation.collect { event ->
+            onNavigate(event)
+        }
+    }
 
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        uiState.topBarNavigationState?.let { topBarState ->
             TopBarNavigation(
-                state = uiState.topBarNavigationState,
+                state = topBarState,
                 events = TopBarNavigationEvents(
                     onNavigationPressed = {
-//                    viewModel.onNavigationPressed()
+                        viewModel.onClosePressed()
                     }
                 )
             )
+        }
+
+        uiState.timePanelState?.let { timerState ->
             TimerPanel(
-                state = uiState.timePanelState,
+                state = timerState,
                 modifier = Modifier.padding(all = 16.dp)
             )
+        }
 
+        uiState.questionCardState?.let { cardState ->
             QuestionCard(
-                state = uiState.questionCardState,
+                state = cardState,
                 modifier = Modifier.padding(all = 16.dp)
             )
+        }
 
+        uiState.questionPanelState?.let { panelState ->
             QuestionPanel(
-                state = uiState.questionPanelState,
+                state = panelState,
                 events = QuestionPanelEvents(
                     onPressed = {
-//                    viewModel.onQuestionTabPressed(it)
+                        viewModel.onAnswerPressed(it)
                     }
                 )
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_zap),
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                    modifier = Modifier.size(16.dp)
-                )
-                Text(
-                    text = "Απάντησε όσες περισσότερες μπορείς σε 60″",
-                    fontSize = 12.sp,
-                    lineHeight = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFF9A97AE)
-                )
-            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_zap),
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(16.dp)
+            )
+            Text(
+                text = "Απάντησε όσες περισσότερες μπορείς σε 60″",
+                fontSize = 12.sp,
+                lineHeight = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF9A97AE)
+            )
         }
     }
 }
