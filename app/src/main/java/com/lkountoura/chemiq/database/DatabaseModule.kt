@@ -2,6 +2,7 @@ package com.lkountoura.chemiq.database
 
 import android.content.Context
 import androidx.room.Room
+import com.lkountoura.chemiq.database.dao.MatchPairDao
 import com.lkountoura.chemiq.database.dao.QuestionDao
 import com.lkountoura.chemiq.database.dao.QuizSelectionsDao
 import com.lkountoura.chemiq.database.dao.ResultDao
@@ -31,4 +32,8 @@ object DatabaseModule {
 
     @Provides
     fun provideResultDao(db: ChemiqDatabase): ResultDao = db.resultDao()
+
+    @Provides
+    fun provideMatchPairDao(db: ChemiqDatabase): MatchPairDao = db.matchPairDao()
+
 }

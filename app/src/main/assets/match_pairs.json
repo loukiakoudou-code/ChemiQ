@@ -1,0 +1,272 @@
+[
+  {
+    "id": 301,
+    "unitId": 3,
+    "name": "Χλωριούχο νάτριο",
+    "formula": "NaCl"
+  },
+  {
+    "id": 302,
+    "unitId": 3,
+    "name": "Θειικό οξύ",
+    "formula": "H2SO4"
+  },
+  {
+    "id": 303,
+    "unitId": 3,
+    "name": "Υδροχλώριο",
+    "formula": "HCl"
+  },
+  {
+    "id": 304,
+    "unitId": 3,
+    "name": "Νιτρικό οξύ",
+    "formula": "HNO3"
+  },
+  {
+    "id": 305,
+    "unitId": 3,
+    "name": "Φωσφορικό οξύ",
+    "formula": "H3PO4"
+  },
+  {
+    "id": 306,
+    "unitId": 3,
+    "name": "Ανθρακικό οξύ",
+    "formula": "H2CO3"
+  },
+  {
+    "id": 307,
+    "unitId": 3,
+    "name": "Θειώδες οξύ",
+    "formula": "H2SO3"
+  },
+  {
+    "id": 308,
+    "unitId": 3,
+    "name": "Υδρόθειο",
+    "formula": "H2S"
+  },
+  {
+    "id": 309,
+    "unitId": 3,
+    "name": "Υδροβρώμιο",
+    "formula": "HBr"
+  },
+  {
+    "id": 310,
+    "unitId": 3,
+    "name": "Υδροφθόριο",
+    "formula": "HF"
+  },
+  {
+    "id": 311,
+    "unitId": 3,
+    "name": "Υδροξείδιο του νατρίου",
+    "formula": "NaOH"
+  },
+  {
+    "id": 312,
+    "unitId": 3,
+    "name": "Υδροξείδιο του καλίου",
+    "formula": "KOH"
+  },
+  {
+    "id": 313,
+    "unitId": 3,
+    "name": "Υδροξείδιο του ασβεστίου",
+    "formula": "Ca(OH)2"
+  },
+  {
+    "id": 314,
+    "unitId": 3,
+    "name": "Υδροξείδιο του βαρίου",
+    "formula": "Ba(OH)2"
+  },
+  {
+    "id": 315,
+    "unitId": 3,
+    "name": "Υδροξείδιο του αργιλίου",
+    "formula": "Al(OH)3"
+  },
+  {
+    "id": 316,
+    "unitId": 3,
+    "name": "Υδροξείδιο του σιδήρου(III)",
+    "formula": "Fe(OH)3"
+  },
+  {
+    "id": 317,
+    "unitId": 3,
+    "name": "Αμμωνία",
+    "formula": "NH3"
+  },
+  {
+    "id": 318,
+    "unitId": 3,
+    "name": "Διοξείδιο του άνθρακα",
+    "formula": "CO2"
+  },
+  {
+    "id": 319,
+    "unitId": 3,
+    "name": "Μονοξείδιο του άνθρακα",
+    "formula": "CO"
+  },
+  {
+    "id": 320,
+    "unitId": 3,
+    "name": "Διοξείδιο του θείου",
+    "formula": "SO2"
+  },
+  {
+    "id": 321,
+    "unitId": 3,
+    "name": "Τριοξείδιο του θείου",
+    "formula": "SO3"
+  },
+  {
+    "id": 322,
+    "unitId": 3,
+    "name": "Διοξείδιο του αζώτου",
+    "formula": "NO2"
+  },
+  {
+    "id": 323,
+    "unitId": 3,
+    "name": "Οξείδιο του ασβεστίου",
+    "formula": "CaO"
+  },
+  {
+    "id": 324,
+    "unitId": 3,
+    "name": "Οξείδιο του αργιλίου",
+    "formula": "Al2O3"
+  },
+  {
+    "id": 325,
+    "unitId": 3,
+    "name": "Οξείδιο του σιδήρου(II)",
+    "formula": "FeO"
+  },
+  {
+    "id": 326,
+    "unitId": 3,
+    "name": "Οξείδιο του σιδήρου(III)",
+    "formula": "Fe2O3"
+  },
+  {
+    "id": 327,
+    "unitId": 3,
+    "name": "Οξείδιο του χαλκού(II)",
+    "formula": "CuO"
+  },
+  {
+    "id": 328,
+    "unitId": 3,
+    "name": "Ανθρακικό ασβέστιο",
+    "formula": "CaCO3"
+  },
+  {
+    "id": 329,
+    "unitId": 3,
+    "name": "Ανθρακικό νάτριο",
+    "formula": "Na2CO3"
+  },
+  {
+    "id": 330,
+    "unitId": 3,
+    "name": "Όξινο ανθρακικό νάτριο",
+    "formula": "NaHCO3"
+  },
+  {
+    "id": 331,
+    "unitId": 3,
+    "name": "Θειικό νάτριο",
+    "formula": "Na2SO4"
+  },
+  {
+    "id": 332,
+    "unitId": 3,
+    "name": "Θειικό βάριο",
+    "formula": "BaSO4"
+  },
+  {
+    "id": 333,
+    "unitId": 3,
+    "name": "Θειικός χαλκός(II)",
+    "formula": "CuSO4"
+  },
+  {
+    "id": 334,
+    "unitId": 3,
+    "name": "Νιτρικό κάλιο",
+    "formula": "KNO3"
+  },
+  {
+    "id": 335,
+    "unitId": 3,
+    "name": "Νιτρικός άργυρος",
+    "formula": "AgNO3"
+  },
+  {
+    "id": 336,
+    "unitId": 3,
+    "name": "Χλωριούχο αμμώνιο",
+    "formula": "NH4Cl"
+  },
+  {
+    "id": 337,
+    "unitId": 3,
+    "name": "Θειικό αμμώνιο",
+    "formula": "(NH4)2SO4"
+  },
+  {
+    "id": 338,
+    "unitId": 3,
+    "name": "Φωσφορικό νάτριο",
+    "formula": "Na3PO4"
+  },
+  {
+    "id": 339,
+    "unitId": 3,
+    "name": "Χλωριούχο ασβέστιο",
+    "formula": "CaCl2"
+  },
+  {
+    "id": 340,
+    "unitId": 3,
+    "name": "Βρωμιούχο κάλιο",
+    "formula": "KBr"
+  },
+  {
+    "id": 341,
+    "unitId": 3,
+    "name": "Ιωδιούχο κάλιο",
+    "formula": "KI"
+  },
+  {
+    "id": 342,
+    "unitId": 3,
+    "name": "Θειούχο νάτριο",
+    "formula": "Na2S"
+  },
+  {
+    "id": 343,
+    "unitId": 3,
+    "name": "Χλωριούχος σίδηρος(III)",
+    "formula": "FeCl3"
+  },
+  {
+    "id": 344,
+    "unitId": 3,
+    "name": "Θειικό αργίλιο",
+    "formula": "Al2(SO4)3"
+  },
+  {
+    "id": 345,
+    "unitId": 3,
+    "name": "Υπερμαγγανικό κάλιο",
+    "formula": "KMnO4"
+  }
+]

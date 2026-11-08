@@ -17,6 +17,10 @@ import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSource
 import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSourceImpl
 import com.lkountoura.chemiq.data.repository.result.ResultRepository
 import com.lkountoura.chemiq.data.repository.result.ResultRepositoryImpl
+import com.lkountoura.chemiq.usecase.matchPairsUseCase.FetchMatchPairsUseCase
+import com.lkountoura.chemiq.usecase.matchPairsUseCase.FetchMatchPairsUseCaseImpl
+import com.lkountoura.chemiq.usecase.matchPairsUseCase.ObserveMatchPairsUseCase
+import com.lkountoura.chemiq.usecase.matchPairsUseCase.ObserveMatchPairsUseCaseImpl
 import com.lkountoura.chemiq.usecase.questionsUseCase.FetchQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveAllQuestionsUseCase
 import com.lkountoura.chemiq.usecase.questionsUseCase.ObserveAllQuestionsUseCaseImpl
@@ -163,5 +167,17 @@ abstract class FeatureBindsModule {
     abstract fun bindObserveAllQuestionsUseCase(
         observeAllQuestionsUseCaseImpl: ObserveAllQuestionsUseCaseImpl
     ): ObserveAllQuestionsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindFetchMatchPairsUseCase(
+        fetchMatchPairsUseCaseImpl: FetchMatchPairsUseCaseImpl
+    ): FetchMatchPairsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindObserveMatchPairsUseCase(
+        observeMatchPairsUseCaseImpl: ObserveMatchPairsUseCaseImpl
+    ): ObserveMatchPairsUseCase
 
 }
