@@ -41,7 +41,7 @@ data class MatchingRound(
             copy(
                 matchedIds = matchedIds + id,
                 selectedNameId = null,
-                wrongNameId = null,
+                moves = moves + 1
             )
         } else {
             copy(
