@@ -6,17 +6,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.lkountoura.chemiq.navigation.routes.Home
+import com.lkountoura.chemiq.navigation.routes.Matching
 import com.lkountoura.chemiq.navigation.routes.PeriodicTable
 import com.lkountoura.chemiq.navigation.routes.Question
 import com.lkountoura.chemiq.navigation.routes.Results
 import com.lkountoura.chemiq.navigation.routes.TimeAttack
 import com.lkountoura.chemiq.navigation.routes.TopicSelect
 import com.lkountoura.chemiq.ui.screen.Home.HomeScreen
+import com.lkountoura.chemiq.ui.screen.MatchingScreen
 import com.lkountoura.chemiq.ui.screen.QuestionScreen
 import com.lkountoura.chemiq.ui.screen.QuizSelectionScreen
 import com.lkountoura.chemiq.ui.screen.ResultScreen
 import com.lkountoura.chemiq.ui.screen.TimeAttackScreen
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
+import com.lkountoura.chemiq.viewmodel.MatchingNavigation
 import com.lkountoura.chemiq.viewmodel.QuestionNavigation
 import com.lkountoura.chemiq.viewmodel.ResultNavigation
 import com.lkountoura.chemiq.viewmodel.TimeAttackNavigation
@@ -44,6 +47,9 @@ fun ChemiQNavHost(
 
                         HomeNavigation.TimeAttack ->
                             navController.navigate(TimeAttack)
+
+                        HomeNavigation.Matching ->
+                            navController.navigate(Matching)
                     }
                 }
             )
@@ -112,6 +118,21 @@ fun ChemiQNavHost(
                         ResultNavigation.Review -> {
 //                            // οθόνη Επανάληψης (Figma 08) – προς το παρόν δεν κάνει τίποτα
                         }
+                    }
+                }
+            )
+        }
+        composable<Matching> {
+            MatchingScreen(
+                onNavigate = { event ->
+                    when (event) {
+                        MatchingNavigation.Back ->
+                            navController.popBackStack<Home>(inclusive = false)
+
+                        MatchingNavigation.End ->
+                            navController.navigate(Results) {
+                                popUpTo<Matching> { inclusive = true }
+                            }
                     }
                 }
             )

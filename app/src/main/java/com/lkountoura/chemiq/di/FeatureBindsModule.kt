@@ -1,6 +1,12 @@
 package com.lkountoura.chemiq.di
 
 
+import com.lkountoura.chemiq.data.repository.match_pair.MatchPairLocalDataSource
+import com.lkountoura.chemiq.data.repository.match_pair.MatchPairLocalDataSourceImpl
+import com.lkountoura.chemiq.data.repository.match_pair.MatchPairRemoteDataSource
+import com.lkountoura.chemiq.data.repository.match_pair.MatchPairRemoteDataSourceImpl
+import com.lkountoura.chemiq.data.repository.match_pair.MatchPairRepository
+import com.lkountoura.chemiq.data.repository.match_pair.MatchPairRepositoryImpl
 import com.lkountoura.chemiq.data.repository.question.QuestionLocalDataSource
 import com.lkountoura.chemiq.data.repository.question.QuestionLocalDataSourceImpl
 import com.lkountoura.chemiq.data.repository.question.QuestionRemoteDataSource
@@ -179,5 +185,23 @@ abstract class FeatureBindsModule {
     abstract fun bindObserveMatchPairsUseCase(
         observeMatchPairsUseCaseImpl: ObserveMatchPairsUseCaseImpl
     ): ObserveMatchPairsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindMatchPairRepository(
+        matchPairRepositoryImpl: MatchPairRepositoryImpl
+    ): MatchPairRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindMatchPairRemoteDataSource(
+        matchPairRemoteDataSourceImpl: MatchPairRemoteDataSourceImpl
+    ): MatchPairRemoteDataSource
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindMatchPairLocalDataSource(
+        matchPairLocalDataSourceImpl: MatchPairLocalDataSourceImpl
+    ): MatchPairLocalDataSource
 
 }

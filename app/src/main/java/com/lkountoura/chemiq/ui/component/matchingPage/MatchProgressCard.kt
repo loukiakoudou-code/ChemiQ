@@ -37,7 +37,8 @@ fun MatchProgressCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Match Progress",
+                text = "Σωστά ζεύγη",
+                modifier = Modifier.weight(1f),
                 color = Color(0xFF16132B),
                 fontSize = 15.sp,
                 lineHeight = 20.sp,

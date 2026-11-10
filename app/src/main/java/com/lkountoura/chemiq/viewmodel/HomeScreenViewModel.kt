@@ -23,6 +23,7 @@ sealed interface HomeNavigation {
     data object ToPeriodicTable : HomeNavigation
 
     data object TimeAttack : HomeNavigation
+    data object Matching : HomeNavigation
 }
 
 @HiltViewModel
@@ -59,6 +60,7 @@ class HomeScreenViewModel @Inject constructor(
                 "quiz" -> _navigation.send(HomeNavigation.ToTopicSelect)
                 "periodic" -> _navigation.send(HomeNavigation.ToPeriodicTable)
                 "time_attack" -> _navigation.send(HomeNavigation.TimeAttack)
+                "match" -> _navigation.send(HomeNavigation.Matching)
             }
         }
     }
