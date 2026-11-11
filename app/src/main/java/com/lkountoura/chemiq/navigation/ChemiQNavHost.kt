@@ -112,8 +112,17 @@ fun ChemiQNavHost(
                                 navController.popBackStack<Home>(inclusive = false)
                             }
 
-                        ResultNavigation.PlayAgain ->
-                            navController.popBackStack<TopicSelect>(inclusive = false)
+                        is ResultNavigation.PlayAgain -> when (event.game) {
+                            "timeAttack" -> navController.navigate(TimeAttack) {
+                                popUpTo<Results> { inclusive = true }
+                            }
+
+                            "matching" -> navController.navigate(Matching) {
+                                popUpTo<Results> { inclusive = true }
+                            }
+
+                            else -> navController.popBackStack<TopicSelect>(inclusive = false)
+                        }
 
                         ResultNavigation.Review -> {
 //                            // οθόνη Επανάληψης (Figma 08) – προς το παρόν δεν κάνει τίποτα

@@ -133,6 +133,7 @@ class QuestionScreenViewModel @Inject constructor(
                 time = timeMs,
                 seri = finishedAttempt.bestStreak,
                 correctAnswers = finishedAttempt.correctCount,
+                answeredCount = finishedAttempt.questions.size,
                 game = "quiz",
                 unitTitle = route.unitTitle,
                 difficulty = difficulty

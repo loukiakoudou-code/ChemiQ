@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 sealed interface ResultNavigation {
     data object Home : ResultNavigation
-    data object PlayAgain : ResultNavigation
+    data class PlayAgain(val game: String) : ResultNavigation
     data object Review : ResultNavigation
 }
 
@@ -34,6 +34,8 @@ class ResultScreenViewModel @Inject constructor(
     private val _navigation = Channel<ResultNavigation>()
     val navigation = _navigation.receiveAsFlow()
 
+    private var game: String = "quiz"
+
     init {
         observeResults()
     }
@@ -41,13 +43,15 @@ class ResultScreenViewModel @Inject constructor(
     private fun navigate(event: ResultNavigation) {
         viewModelScope.launch { _navigation.send(event) }
     }
+
     fun onHomePressed() = navigate(ResultNavigation.Home)
-    fun onPlayAgainPressed() = navigate(ResultNavigation.PlayAgain)
+    fun onPlayAgainPressed() = navigate(ResultNavigation.PlayAgain(game))
     fun onReviewPressed() = navigate(ResultNavigation.Review)
 
     private fun observeResults() {
         viewModelScope.launch {
             observeResultUseCase.execute().collect { result ->
+                game = result.game
                 val xp = getXpUseCase.execute()
                 _uiState.update { oldState ->
                     provider.provideData(result = result, xp = xp)

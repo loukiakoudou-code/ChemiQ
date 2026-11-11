@@ -14,7 +14,8 @@ class ResultDTOConverter {
             correctAnswers = entity.correctAnswers,
             game = entity.game,
             unitTitle = entity.unitTitle,
-            difficulty = entity.difficulty
+            difficulty = entity.difficulty,
+            answeredCount = entity.answeredCount
         )
     }
 }

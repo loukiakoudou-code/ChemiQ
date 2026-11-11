@@ -75,22 +75,25 @@ private fun ButtonLayoutTwo(
     state: ButtonState,
     events: ButtonActionsEvents? = null,
 ) {
-    Row(
+    Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+
+        CustomButton(
+            text = state.secondaryButtonText ?: "",
+            containerColor = state.secondaryButtonColor,
+            contentColor = state.secondaryTextButtonColor,
+            onClick = { events?.onSecondaryButtonPressed?.invoke(state.tag) },
+            modifier = Modifier.fillMaxWidth(),
+            border = BorderStroke(1.5.dp, Color(0xFFCFCBE0))
+        )
         CustomButton(
             text = state.mainButtonText,
             containerColor = state.mainButtonColor,
             contentColor = state.mainTextButtonColor,
             onClick = { events?.onMainButtonPressed?.invoke(state.tag) },
-            modifier = Modifier.weight(1f)
-        )
-        CustomButton(
-            text = state.secondaryButtonText ?: "",
-            containerColor = state.secondaryButtonColor,
-            contentColor = state.secondaryTextButtonColor,
-            onClick = { events?.onSecondaryButtonPressed?.invoke(state.tag) }
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

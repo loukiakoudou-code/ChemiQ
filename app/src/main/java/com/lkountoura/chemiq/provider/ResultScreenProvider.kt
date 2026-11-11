@@ -21,6 +21,8 @@ class ResultScreenProvider @Inject constructor() {
     }
 
     fun provideData(result: GameResultDTO, xp: XpDTO): ResultScreenState.Data {
+        val total = result.answeredCount?.takeIf { it > 0 } ?: 10
+        val accuracy = result.correctAnswers * 100 / total
         val time = result.time?.let { time ->
             time / 1000
         }
@@ -38,7 +40,7 @@ class ResultScreenProvider @Inject constructor() {
             statType = StatType.XP
         )
         val tab2 = ResultStatCardState(
-            result = "${result.correctAnswers * 10}%",
+            result = "$accuracy%",
             title = "Ακρίβεια",
             statType = StatType.ACCURACY
         )
@@ -52,22 +54,31 @@ class ResultScreenProvider @Inject constructor() {
                 resultStatCard = listOf(tab1, tab2, tab3)
             ),
             levelCardState = provideLevelCardState(xp = xp),
-            chemiQButtonState = ButtonState(
-                tag = "restart",
-                _mainButtonText = "Αρχική",
-                _secondaryButtonText = "Ξαναπαίξε",
-                _tertiaryButtonText = "Επανάληψη λαθών (${10 - result.correctAnswers})",
-                _buttonLayout = ButtonLayout.THREE_BUTTON
-            ),
+            chemiQButtonState = if (result.game == "quiz") {
+                ButtonState(
+                    tag = "restart",
+                    _mainButtonText = "Αρχική",
+                    _secondaryButtonText = "Ξαναπαίξε",
+                    _tertiaryButtonText = "Επανάληψη λαθών (${total - result.correctAnswers})",
+                    _buttonLayout = ButtonLayout.THREE_BUTTON
+                )
+            } else {
+                ButtonState(
+                    tag = "restart",
+                    _mainButtonText = "Αρχική",
+                    _secondaryButtonText = "Ξαναπαίξε",
+                    _buttonLayout = ButtonLayout.TWO_BUTTON
+                )
+            },
             scoreRingState = ScoreRingState(
-                score = "${result.correctAnswers}/10",
-                description = "σωστές",
-                progress = result.correctAnswers / 10f
+                score = "${result.correctAnswers}/$total",
+                description = if (result.game == "matching") "ζεύγη / κινήσεις" else "σωστές",
+                progress = result.correctAnswers / total.toFloat()
             ),
             resultTitleState = ResultTitleState(
                 title = when {
-                    result.correctAnswers >= 8 -> "Μπράβο!"
-                    result.correctAnswers >= 5 -> "Καλή προσπάθεια!"
+                    accuracy >= 80 -> "Μπράβο!"
+                    accuracy >= 50 -> "Καλή προσπάθεια!"
                     else -> "Συνέχισε την εξάσκηση!"
                 },
                 subtitle = provideSubtitle(result)
@@ -105,6 +116,7 @@ class ResultScreenProvider @Inject constructor() {
         val game = when (result.game) {
             "quiz" -> "Quiz"
             "timeAttack" -> "Time Attack"
+            "matching" -> "Αντιστοίχιση"
             else -> result.game
         }
         val difficulty = when (result.difficulty) {

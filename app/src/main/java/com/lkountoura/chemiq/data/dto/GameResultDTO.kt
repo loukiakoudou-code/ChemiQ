@@ -6,6 +6,7 @@ data class GameResultDTO(
     val correctAnswers: Int,
     val game: String,
     val unitTitle: String?,
-    val difficulty: Int?
+    val difficulty: Int?,
+    val answeredCount: Int?
 )
 
