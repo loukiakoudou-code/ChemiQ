@@ -14,6 +14,7 @@ ksp = "2.3.11"
 hiltAndroidx = "1.4.0"
 room = "2.8.5"
 serialization = "1.9.0"
+material3 = "1.4.0"
 
 
 [libraries]
@@ -38,6 +39,7 @@ androidx-hilt-viewmodel-compose = { group = "androidx.hilt", name = "hilt-lifecy
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

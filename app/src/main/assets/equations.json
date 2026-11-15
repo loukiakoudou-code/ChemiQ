@@ -1,0 +1,242 @@
+[
+  {
+    "id": 401,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "CH4,O2",
+    "products": "CO2,H2O",
+    "solution": "1,2,1,2"
+  },
+  {
+    "id": 402,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "H2,O2",
+    "products": "H2O",
+    "solution": "2,1,2"
+  },
+  {
+    "id": 403,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "N2,H2",
+    "products": "NH3",
+    "solution": "1,3,2"
+  },
+  {
+    "id": 404,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "Na,Cl2",
+    "products": "NaCl",
+    "solution": "2,1,2"
+  },
+  {
+    "id": 405,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "Mg,O2",
+    "products": "MgO",
+    "solution": "2,1,2"
+  },
+  {
+    "id": 406,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "H2,Cl2",
+    "products": "HCl",
+    "solution": "1,1,2"
+  },
+  {
+    "id": 407,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "Zn,HCl",
+    "products": "ZnCl2,H2",
+    "solution": "1,2,1,1"
+  },
+  {
+    "id": 408,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "H2O2",
+    "products": "H2O,O2",
+    "solution": "2,2,1"
+  },
+  {
+    "id": 409,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "HgO",
+    "products": "Hg,O2",
+    "solution": "2,2,1"
+  },
+  {
+    "id": 410,
+    "unitId": 4,
+    "difficulty": 1,
+    "reactants": "Ca,H2O",
+    "products": "Ca(OH)2,H2",
+    "solution": "1,2,1,1"
+  },
+  {
+    "id": 411,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Al,O2",
+    "products": "Al2O3",
+    "solution": "4,3,2"
+  },
+  {
+    "id": 412,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Fe,Cl2",
+    "products": "FeCl3",
+    "solution": "2,3,2"
+  },
+  {
+    "id": 413,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "KClO3",
+    "products": "KCl,O2",
+    "solution": "2,2,3"
+  },
+  {
+    "id": 414,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Na,H2O",
+    "products": "NaOH,H2",
+    "solution": "2,2,2,1"
+  },
+  {
+    "id": 415,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "H2SO4,NaOH",
+    "products": "Na2SO4,H2O",
+    "solution": "1,2,1,2"
+  },
+  {
+    "id": 416,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Al,HCl",
+    "products": "AlCl3,H2",
+    "solution": "2,6,2,3"
+  },
+  {
+    "id": 417,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Ca(OH)2,HCl",
+    "products": "CaCl2,H2O",
+    "solution": "1,2,1,2"
+  },
+  {
+    "id": 418,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Cl2,NaBr",
+    "products": "NaCl,Br2",
+    "solution": "1,2,2,1"
+  },
+  {
+    "id": 419,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "CaCO3,HCl",
+    "products": "CaCl2,H2O,CO2",
+    "solution": "1,2,1,1,1"
+  },
+  {
+    "id": 420,
+    "unitId": 4,
+    "difficulty": 2,
+    "reactants": "Pb(NO3)2,KI",
+    "products": "PbI2,KNO3",
+    "solution": "1,2,1,2"
+  },
+  {
+    "id": 421,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "C3H8,O2",
+    "products": "CO2,H2O",
+    "solution": "1,5,3,4"
+  },
+  {
+    "id": 422,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "Fe2O3,CO",
+    "products": "Fe,CO2",
+    "solution": "1,3,2,3"
+  },
+  {
+    "id": 423,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "C2H6,O2",
+    "products": "CO2,H2O",
+    "solution": "2,7,4,6"
+  },
+  {
+    "id": 424,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "Al,H2SO4",
+    "products": "Al2(SO4)3,H2",
+    "solution": "2,3,1,3"
+  },
+  {
+    "id": 425,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "H3PO4,Ca(OH)2",
+    "products": "Ca3(PO4)2,H2O",
+    "solution": "2,3,1,6"
+  },
+  {
+    "id": 426,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "NH3,O2",
+    "products": "NO,H2O",
+    "solution": "4,5,4,6"
+  },
+  {
+    "id": 427,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "FeS2,O2",
+    "products": "Fe2O3,SO2",
+    "solution": "4,11,2,8"
+  },
+  {
+    "id": 428,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "C6H12O6,O2",
+    "products": "CO2,H2O",
+    "solution": "1,6,6,6"
+  },
+  {
+    "id": 429,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "Al(OH)3,H2SO4",
+    "products": "Al2(SO4)3,H2O",
+    "solution": "2,3,1,6"
+  },
+  {
+    "id": 430,
+    "unitId": 4,
+    "difficulty": 3,
+    "reactants": "C4H10,O2",
+    "products": "CO2,H2O",
+    "solution": "2,13,8,10"
+  }
+]

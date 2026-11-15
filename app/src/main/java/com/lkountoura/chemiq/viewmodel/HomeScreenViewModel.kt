@@ -16,6 +16,9 @@ import javax.inject.Inject
 
 interface HomeScreenViewModelActions {
     fun onGameTabPressed(tag: String)
+    fun onBottomSheetDismissed()
+    fun onDifficultyPressed(tag: String)
+    fun onStartPressed()
 }
 
 sealed interface HomeNavigation {
@@ -47,9 +50,13 @@ class HomeScreenViewModel @Inject constructor(
     private fun observeReviewQuestionsCount() {
         viewModelScope.launch {
             observeReviewQuestionsCountUseCase.execute().collect { count ->
-                _uiState.update {
-                    provider.provideData(reviewQuestionsCount = count)
+                _uiState.update { oldState ->
+                    provider.provideData(reviewQuestionsCount = count).copy(
+                        isBottomSheetOpen = oldState.isBottomSheetOpen,
+                        difficultySheetState = oldState.difficultySheetState
+                    )
                 }
+
             }
         }
     }
@@ -61,7 +68,29 @@ class HomeScreenViewModel @Inject constructor(
                 "periodic" -> _navigation.send(HomeNavigation.ToPeriodicTable)
                 "time_attack" -> _navigation.send(HomeNavigation.TimeAttack)
                 "match" -> _navigation.send(HomeNavigation.Matching)
+                "balance" -> _uiState.update { oldState ->
+                    provider.provideToggleBottomSheet(oldState = oldState)
+                }
             }
         }
+    }
+
+    override fun onBottomSheetDismissed() {
+        _uiState.update { oldState ->
+            provider.provideToggleBottomSheet(oldState = oldState)
+        }
+    }
+
+    override fun onDifficultyPressed(tag: String) {
+        _uiState.update { oldState ->
+            provider.provideSelectedDifficulty(tag = tag, oldState = oldState)
+        }
+    }
+
+    override fun onStartPressed() {
+        _uiState.update { oldState ->
+            provider.provideToggleBottomSheet(oldState = oldState)
+        }
+        // Αργότερα: navigation στο παιχνίδι Ισοστάθμιση με τη δυσκολία
     }
 }

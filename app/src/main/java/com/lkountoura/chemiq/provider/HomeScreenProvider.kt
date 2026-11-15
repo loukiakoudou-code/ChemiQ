@@ -2,10 +2,16 @@ package com.lkountoura.chemiq.provider
 
 import androidx.compose.ui.graphics.Color
 import com.lkountoura.chemiq.R
+import com.lkountoura.chemiq.ui.component.balancePage.DifficultySheetState
+import com.lkountoura.chemiq.ui.component.balancePage.LevelInfoCardState
+import com.lkountoura.chemiq.ui.component.common.ButtonLayout
+import com.lkountoura.chemiq.ui.component.common.ButtonState
 import com.lkountoura.chemiq.ui.component.homePage.GamePanelState
 import com.lkountoura.chemiq.ui.component.homePage.GameTabState
 import com.lkountoura.chemiq.ui.component.homePage.HeaderState
 import com.lkountoura.chemiq.ui.component.homePage.ReviewBannerState
+import com.lkountoura.chemiq.ui.component.unitSelectionPage.DifficultyBoxState
+import com.lkountoura.chemiq.ui.component.unitSelectionPage.DifficultyPanelState
 import com.lkountoura.chemiq.ui.state.HomeScreenState
 import javax.inject.Inject
 
@@ -64,9 +70,83 @@ class HomeScreenProvider @Inject constructor() {
                 text = "Παιχνίδια",
                 helpText = "5 τρόποι εξάσκησης"
             ),
-            reviewBannerState = provideReviewBannerState(reviewQuestionsCount)
+            reviewBannerState = provideReviewBannerState(reviewQuestionsCount),
+            isBottomSheetOpen = false,
+            difficultySheetState = provideDifficultySheetState(difficulty = 2)
         )
     }
+
+    fun provideToggleBottomSheet(oldState: HomeScreenState): HomeScreenState.Data {
+        val data = oldState as HomeScreenState.Data
+        return data.copy(
+            isBottomSheetOpen = !data.isBottomSheetOpen
+        )
+    }
+
+    fun provideSelectedDifficulty(tag: String, oldState: HomeScreenState): HomeScreenState.Data {
+        val data = oldState as HomeScreenState.Data
+        val difficulty = tag.toIntOrNull() ?: 2
+        return data.copy(
+            difficultySheetState = provideDifficultySheetState(difficulty = difficulty)
+        )
+    }
+
+    fun provideDifficultySheetState(difficulty: Int): DifficultySheetState {
+        val easy = DifficultyBoxState(tag = "1").setDifficultyBoxState(
+            text = "Εύκολο",
+            isSelected = difficulty == 1
+        )
+        val medium = DifficultyBoxState(tag = "2").setDifficultyBoxState(
+            text = "Μέτριο",
+            isSelected = difficulty == 2
+        )
+        val hard = DifficultyBoxState(tag = "3").setDifficultyBoxState(
+            text = "Δύσκολο",
+            isSelected = difficulty == 3
+        )
+        val levelInfoCardState = when (difficulty) {
+            1 -> LevelInfoCardState(
+                title = "Εύκολο",
+                xpText = "10 XP ανά εξίσωση",
+                bullets = listOf(
+                    "Απλές εξισώσεις, με λίγα στοιχεία και μικρούς συντελεστές",
+                    "Ο πίνακας ατόμων ενημερώνεται σε κάθε αλλαγή"
+                )
+            )
+
+            3 -> LevelInfoCardState(
+                title = "Δύσκολο",
+                xpText = "30 XP ανά εξίσωση",
+                bullets = listOf(
+                    "Οι πιο σύνθετες εξισώσεις, με πολλά στοιχεία και μεγάλους συντελεστές",
+                    "Ο πίνακας ατόμων εμφανίζεται μόνο όταν πατήσεις «Έλεγχος»"
+                )
+            )
+
+            else -> LevelInfoCardState(
+                title = "Μέτριο",
+                xpText = "20 XP ανά εξίσωση",
+                bullets = listOf(
+                    "Πιο σύνθετες εξισώσεις, με περισσότερα στοιχεία και μεγαλύτερους συντελεστές",
+                    "Ο πίνακας ατόμων ενημερώνεται σε κάθε αλλαγή, όπως στο εύκολο"
+                )
+            )
+        }
+        return DifficultySheetState(
+            title = "Ισοστάθμιση",
+            subtitle = "Διάλεξε δυσκολία για να ξεκινήσεις",
+            difficultyPanelState = DifficultyPanelState(
+                difficultyBoxes = listOf(easy, medium, hard)
+            ),
+            levelInfoCardState = levelInfoCardState,
+            buttonState = ButtonState(
+                tag = "start",
+                _mainButtonText = "Ξεκίνα",
+                _buttonLayout = ButtonLayout.ONE_BUTTON
+            )
+        )
+    }
+
 
     private fun provideReviewBannerState(reviewQuestionsCount: Int): ReviewBannerState? {
         if (reviewQuestionsCount <= 0) return null

@@ -1,0 +1,290 @@
+[
+  {
+    "z": 1,
+    "symbol": "H",
+    "nameGr": "Υδρογόνο",
+    "period": 1,
+    "groupNo": 1,
+    "category": "nonmetal"
+  },
+  {
+    "z": 2,
+    "symbol": "He",
+    "nameGr": "Ήλιο",
+    "period": 1,
+    "groupNo": 18,
+    "category": "noble-gas"
+  },
+  {
+    "z": 3,
+    "symbol": "Li",
+    "nameGr": "Λίθιο",
+    "period": 2,
+    "groupNo": 1,
+    "category": "alkali"
+  },
+  {
+    "z": 4,
+    "symbol": "Be",
+    "nameGr": "Βηρύλλιο",
+    "period": 2,
+    "groupNo": 2,
+    "category": "alkaline"
+  },
+  {
+    "z": 5,
+    "symbol": "B",
+    "nameGr": "Βόριο",
+    "period": 2,
+    "groupNo": 13,
+    "category": "metalloid"
+  },
+  {
+    "z": 6,
+    "symbol": "C",
+    "nameGr": "Άνθρακας",
+    "period": 2,
+    "groupNo": 14,
+    "category": "nonmetal"
+  },
+  {
+    "z": 7,
+    "symbol": "N",
+    "nameGr": "Άζωτο",
+    "period": 2,
+    "groupNo": 15,
+    "category": "nonmetal"
+  },
+  {
+    "z": 8,
+    "symbol": "O",
+    "nameGr": "Οξυγόνο",
+    "period": 2,
+    "groupNo": 16,
+    "category": "nonmetal"
+  },
+  {
+    "z": 9,
+    "symbol": "F",
+    "nameGr": "Φθόριο",
+    "period": 2,
+    "groupNo": 17,
+    "category": "halogen"
+  },
+  {
+    "z": 10,
+    "symbol": "Ne",
+    "nameGr": "Νέο",
+    "period": 2,
+    "groupNo": 18,
+    "category": "noble-gas"
+  },
+  {
+    "z": 11,
+    "symbol": "Na",
+    "nameGr": "Νάτριο",
+    "period": 3,
+    "groupNo": 1,
+    "category": "alkali"
+  },
+  {
+    "z": 12,
+    "symbol": "Mg",
+    "nameGr": "Μαγνήσιο",
+    "period": 3,
+    "groupNo": 2,
+    "category": "alkaline"
+  },
+  {
+    "z": 13,
+    "symbol": "Al",
+    "nameGr": "Αργίλιο",
+    "period": 3,
+    "groupNo": 13,
+    "category": "post-transition"
+  },
+  {
+    "z": 14,
+    "symbol": "Si",
+    "nameGr": "Πυρίτιο",
+    "period": 3,
+    "groupNo": 14,
+    "category": "metalloid"
+  },
+  {
+    "z": 15,
+    "symbol": "P",
+    "nameGr": "Φωσφόρος",
+    "period": 3,
+    "groupNo": 15,
+    "category": "nonmetal"
+  },
+  {
+    "z": 16,
+    "symbol": "S",
+    "nameGr": "Θείο",
+    "period": 3,
+    "groupNo": 16,
+    "category": "nonmetal"
+  },
+  {
+    "z": 17,
+    "symbol": "Cl",
+    "nameGr": "Χλώριο",
+    "period": 3,
+    "groupNo": 17,
+    "category": "halogen"
+  },
+  {
+    "z": 18,
+    "symbol": "Ar",
+    "nameGr": "Αργό",
+    "period": 3,
+    "groupNo": 18,
+    "category": "noble-gas"
+  },
+  {
+    "z": 19,
+    "symbol": "K",
+    "nameGr": "Κάλιο",
+    "period": 4,
+    "groupNo": 1,
+    "category": "alkali"
+  },
+  {
+    "z": 20,
+    "symbol": "Ca",
+    "nameGr": "Ασβέστιο",
+    "period": 4,
+    "groupNo": 2,
+    "category": "alkaline"
+  },
+  {
+    "z": 21,
+    "symbol": "Sc",
+    "nameGr": "Σκάνδιο",
+    "period": 4,
+    "groupNo": 3,
+    "category": "transition"
+  },
+  {
+    "z": 22,
+    "symbol": "Ti",
+    "nameGr": "Τιτάνιο",
+    "period": 4,
+    "groupNo": 4,
+    "category": "transition"
+  },
+  {
+    "z": 23,
+    "symbol": "V",
+    "nameGr": "Βανάδιο",
+    "period": 4,
+    "groupNo": 5,
+    "category": "transition"
+  },
+  {
+    "z": 24,
+    "symbol": "Cr",
+    "nameGr": "Χρώμιο",
+    "period": 4,
+    "groupNo": 6,
+    "category": "transition"
+  },
+  {
+    "z": 25,
+    "symbol": "Mn",
+    "nameGr": "Μαγγάνιο",
+    "period": 4,
+    "groupNo": 7,
+    "category": "transition"
+  },
+  {
+    "z": 26,
+    "symbol": "Fe",
+    "nameGr": "Σίδηρος",
+    "period": 4,
+    "groupNo": 8,
+    "category": "transition"
+  },
+  {
+    "z": 27,
+    "symbol": "Co",
+    "nameGr": "Κοβάλτιο",
+    "period": 4,
+    "groupNo": 9,
+    "category": "transition"
+  },
+  {
+    "z": 28,
+    "symbol": "Ni",
+    "nameGr": "Νικέλιο",
+    "period": 4,
+    "groupNo": 10,
+    "category": "transition"
+  },
+  {
+    "z": 29,
+    "symbol": "Cu",
+    "nameGr": "Χαλκός",
+    "period": 4,
+    "groupNo": 11,
+    "category": "transition"
+  },
+  {
+    "z": 30,
+    "symbol": "Zn",
+    "nameGr": "Ψευδάργυρος",
+    "period": 4,
+    "groupNo": 12,
+    "category": "transition"
+  },
+  {
+    "z": 31,
+    "symbol": "Ga",
+    "nameGr": "Γάλλιο",
+    "period": 4,
+    "groupNo": 13,
+    "category": "post-transition"
+  },
+  {
+    "z": 32,
+    "symbol": "Ge",
+    "nameGr": "Γερμάνιο",
+    "period": 4,
+    "groupNo": 14,
+    "category": "metalloid"
+  },
+  {
+    "z": 33,
+    "symbol": "As",
+    "nameGr": "Αρσενικό",
+    "period": 4,
+    "groupNo": 15,
+    "category": "metalloid"
+  },
+  {
+    "z": 34,
+    "symbol": "Se",
+    "nameGr": "Σελήνιο",
+    "period": 4,
+    "groupNo": 16,
+    "category": "nonmetal"
+  },
+  {
+    "z": 35,
+    "symbol": "Br",
+    "nameGr": "Βρώμιο",
+    "period": 4,
+    "groupNo": 17,
+    "category": "halogen"
+  },
+  {
+    "z": 36,
+    "symbol": "Kr",
+    "nameGr": "Κρυπτό",
+    "period": 4,
+    "groupNo": 18,
+    "category": "noble-gas"
+  }
+]

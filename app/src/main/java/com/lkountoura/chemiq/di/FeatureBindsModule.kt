@@ -1,6 +1,12 @@
 package com.lkountoura.chemiq.di
 
 
+import com.lkountoura.chemiq.data.repository.equation.EquationLocalDataSource
+import com.lkountoura.chemiq.data.repository.equation.EquationLocalDataSourceImpl
+import com.lkountoura.chemiq.data.repository.equation.EquationRemoteDataSource
+import com.lkountoura.chemiq.data.repository.equation.EquationRemoteDataSourceImpl
+import com.lkountoura.chemiq.data.repository.equation.EquationRepository
+import com.lkountoura.chemiq.data.repository.equation.EquationRepositoryImpl
 import com.lkountoura.chemiq.data.repository.match_pair.MatchPairLocalDataSource
 import com.lkountoura.chemiq.data.repository.match_pair.MatchPairLocalDataSourceImpl
 import com.lkountoura.chemiq.data.repository.match_pair.MatchPairRemoteDataSource
@@ -23,6 +29,10 @@ import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSource
 import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSourceImpl
 import com.lkountoura.chemiq.data.repository.result.ResultRepository
 import com.lkountoura.chemiq.data.repository.result.ResultRepositoryImpl
+import com.lkountoura.chemiq.usecase.equationUseCase.FetchEquationsUseCase
+import com.lkountoura.chemiq.usecase.equationUseCase.FetchEquationsUseCaseImpl
+import com.lkountoura.chemiq.usecase.equationUseCase.ObserveEquationsUseCase
+import com.lkountoura.chemiq.usecase.equationUseCase.ObserveEquationsUseCaseImpl
 import com.lkountoura.chemiq.usecase.matchPairsUseCase.FetchMatchPairsUseCase
 import com.lkountoura.chemiq.usecase.matchPairsUseCase.FetchMatchPairsUseCaseImpl
 import com.lkountoura.chemiq.usecase.matchPairsUseCase.ObserveMatchPairsUseCase
@@ -203,5 +213,35 @@ abstract class FeatureBindsModule {
     abstract fun bindMatchPairLocalDataSource(
         matchPairLocalDataSourceImpl: MatchPairLocalDataSourceImpl
     ): MatchPairLocalDataSource
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindFetchEquationsUseCase(
+        fetchEquationsUseCaseImpl: FetchEquationsUseCaseImpl
+    ): FetchEquationsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindObserveEquationsUseCase(
+        observeEquationsUseCaseImpl: ObserveEquationsUseCaseImpl
+    ): ObserveEquationsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindEquationRepository(
+        equationRepositoryImpl: EquationRepositoryImpl
+    ): EquationRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindEquationRemoteDataSource(
+        equationRemoteDataSourceImpl: EquationRemoteDataSourceImpl
+    ): EquationRemoteDataSource
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindEquationLocalDataSource(
+        equationLocalDataSourceImpl: EquationLocalDataSourceImpl
+    ): EquationLocalDataSource
 
 }
