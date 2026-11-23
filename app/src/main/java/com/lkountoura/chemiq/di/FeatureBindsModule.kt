@@ -29,6 +29,8 @@ import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSource
 import com.lkountoura.chemiq.data.repository.result.ResultLocalDataSourceImpl
 import com.lkountoura.chemiq.data.repository.result.ResultRepository
 import com.lkountoura.chemiq.data.repository.result.ResultRepositoryImpl
+import com.lkountoura.chemiq.usecase.equationUseCase.CalculateAtomsUseCase
+import com.lkountoura.chemiq.usecase.equationUseCase.CalculateAtomsUseCaseImpl
 import com.lkountoura.chemiq.usecase.equationUseCase.FetchEquationsUseCase
 import com.lkountoura.chemiq.usecase.equationUseCase.FetchEquationsUseCaseImpl
 import com.lkountoura.chemiq.usecase.equationUseCase.ObserveEquationsUseCase
@@ -243,5 +245,11 @@ abstract class FeatureBindsModule {
     abstract fun bindEquationLocalDataSource(
         equationLocalDataSourceImpl: EquationLocalDataSourceImpl
     ): EquationLocalDataSource
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindCalculateAtomsUseCase(
+        calculateAtomsUseCaseImpl: CalculateAtomsUseCaseImpl
+    ): CalculateAtomsUseCase
 
 }

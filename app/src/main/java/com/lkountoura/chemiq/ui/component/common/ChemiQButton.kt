@@ -49,6 +49,14 @@ fun ChemiQButton(
                 modifier = modifier
             )
         }
+
+        ButtonLayout.TWO_BUTTON_ROW -> {
+            ButtonLayoutTwoRow(
+                state = state,
+                events = events,
+                modifier = modifier
+            )
+        }
     }
 }
 
@@ -94,6 +102,34 @@ private fun ButtonLayoutTwo(
             contentColor = state.mainTextButtonColor,
             onClick = { events?.onMainButtonPressed?.invoke(state.tag) },
             modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun ButtonLayoutTwoRow(
+    modifier: Modifier = Modifier,
+    state: ButtonState,
+    events: ButtonActionsEvents? = null,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        CustomButton(
+            text = state.secondaryButtonText ?: "",
+            containerColor = state.secondaryButtonColor,
+            contentColor = state.secondaryTextButtonColor,
+            onClick = { events?.onSecondaryButtonPressed?.invoke(state.tag) },
+            modifier = Modifier.weight(1f),
+            border = BorderStroke(1.5.dp, Color(0xFFCFCBE0))
+        )
+        CustomButton(
+            text = state.mainButtonText,
+            containerColor = state.mainButtonColor,
+            contentColor = state.mainTextButtonColor,
+            onClick = { events?.onMainButtonPressed?.invoke(state.tag) },
+            modifier = Modifier.weight(1f)
         )
     }
 }
@@ -215,5 +251,6 @@ data class ButtonActionsEvents(
 enum class ButtonLayout {
     ONE_BUTTON,
     TWO_BUTTON,
+    TWO_BUTTON_ROW,
     THREE_BUTTON
 }
