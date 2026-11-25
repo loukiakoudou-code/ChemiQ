@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.lkountoura.chemiq.navigation.routes.Balancing
 import com.lkountoura.chemiq.navigation.routes.Home
 import com.lkountoura.chemiq.navigation.routes.Matching
 import com.lkountoura.chemiq.navigation.routes.PeriodicTable
@@ -12,12 +13,14 @@ import com.lkountoura.chemiq.navigation.routes.Question
 import com.lkountoura.chemiq.navigation.routes.Results
 import com.lkountoura.chemiq.navigation.routes.TimeAttack
 import com.lkountoura.chemiq.navigation.routes.TopicSelect
+import com.lkountoura.chemiq.ui.screen.BalancingScreen
 import com.lkountoura.chemiq.ui.screen.Home.HomeScreen
 import com.lkountoura.chemiq.ui.screen.MatchingScreen
 import com.lkountoura.chemiq.ui.screen.QuestionScreen
 import com.lkountoura.chemiq.ui.screen.QuizSelectionScreen
 import com.lkountoura.chemiq.ui.screen.ResultScreen
 import com.lkountoura.chemiq.ui.screen.TimeAttackScreen
+import com.lkountoura.chemiq.viewmodel.BalancingNavigation
 import com.lkountoura.chemiq.viewmodel.HomeNavigation
 import com.lkountoura.chemiq.viewmodel.MatchingNavigation
 import com.lkountoura.chemiq.viewmodel.QuestionNavigation
@@ -50,6 +53,9 @@ fun ChemiQNavHost(
 
                         HomeNavigation.Matching ->
                             navController.navigate(Matching)
+
+                        is HomeNavigation.Balancing ->
+                            navController.navigate(Balancing(difficulty = event.difficulty))
                     }
                 }
             )
@@ -121,6 +127,8 @@ fun ChemiQNavHost(
                                 popUpTo<Results> { inclusive = true }
                             }
 
+                            "balancing" -> navController.popBackStack<Home>(inclusive = false)
+
                             else -> navController.popBackStack<TopicSelect>(inclusive = false)
                         }
 
@@ -141,6 +149,23 @@ fun ChemiQNavHost(
                         MatchingNavigation.End ->
                             navController.navigate(Results) {
                                 popUpTo<Matching> { inclusive = true }
+                            }
+                    }
+                }
+            )
+        }
+
+
+        composable<Balancing> {
+            BalancingScreen(
+                onNavigate = { event ->
+                    when (event) {
+                        BalancingNavigation.Back ->
+                            navController.popBackStack<Home>(inclusive = false)
+
+                        BalancingNavigation.End ->
+                            navController.navigate(Results) {
+                                popUpTo<Balancing> { inclusive = true }
                             }
                     }
                 }

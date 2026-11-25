@@ -27,6 +27,7 @@ sealed interface HomeNavigation {
 
     data object TimeAttack : HomeNavigation
     data object Matching : HomeNavigation
+    data class Balancing(val difficulty: Int) : HomeNavigation
 }
 
 @HiltViewModel
@@ -42,6 +43,8 @@ class HomeScreenViewModel @Inject constructor(
         MutableStateFlow<HomeScreenState>(provider.provideData())
     val uiState: MutableStateFlow<HomeScreenState>
         get() = _uiState
+
+    private var selectedDifficulty = 2
 
     init {
         observeReviewQuestionsCount()
@@ -82,6 +85,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     override fun onDifficultyPressed(tag: String) {
+        selectedDifficulty = tag.toIntOrNull() ?: 2
         _uiState.update { oldState ->
             provider.provideSelectedDifficulty(tag = tag, oldState = oldState)
         }
@@ -91,6 +95,8 @@ class HomeScreenViewModel @Inject constructor(
         _uiState.update { oldState ->
             provider.provideToggleBottomSheet(oldState = oldState)
         }
-        // Αργότερα: navigation στο παιχνίδι Ισοστάθμιση με τη δυσκολία
+        viewModelScope.launch {
+            _navigation.send(HomeNavigation.Balancing(difficulty = selectedDifficulty))
+        }
     }
 }

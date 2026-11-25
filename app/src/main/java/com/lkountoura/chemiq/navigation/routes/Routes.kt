@@ -27,7 +27,7 @@ object Results
 object PeriodicTable
 
 @Serializable
-object Balancing
+data class Balancing(val difficulty: Int)
 
 @Serializable
 object Matching

@@ -72,7 +72,11 @@ class ResultScreenProvider @Inject constructor() {
             },
             scoreRingState = ScoreRingState(
                 score = "${result.correctAnswers}/$total",
-                description = if (result.game == "matching") "ζεύγη / κινήσεις" else "σωστές",
+                description = when (result.game) {
+                    "matching" -> "ζεύγη / κινήσεις"
+                    "balancing" -> "σωστές / κινήσεις"
+                    else -> "σωστές"
+                },
                 progress = result.correctAnswers / total.toFloat()
             ),
             resultTitleState = ResultTitleState(
@@ -117,6 +121,7 @@ class ResultScreenProvider @Inject constructor() {
             "quiz" -> "Quiz"
             "timeAttack" -> "Time Attack"
             "matching" -> "Αντιστοίχιση"
+            "balancing" -> "Ισοστάθμιση"
             else -> result.game
         }
         val difficulty = when (result.difficulty) {
